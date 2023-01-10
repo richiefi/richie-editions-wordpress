@@ -155,6 +155,10 @@ class Richie_Editions_Wp_Public {
 
         [ $organization, $product ] = explode( '/', $atts['product'] );
 
+        if ( !empty( $organization ) && empty( $product ) ) {
+            $product = $organization;
+        }
+
         if ( empty( $organization ) || empty( $product ) ) {
             return sprintf( '<div>%s</div>', esc_html__( 'Invalid product code', 'richie-editions-wp' ) );
         }
