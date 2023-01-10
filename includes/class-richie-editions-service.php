@@ -359,22 +359,23 @@ class Richie_Editions_Service {
         }
 
         $issues     = array();
-        $product_id = $organization . '.magg.io/' . $product;
+        $index_product_id = $organization . '.magg.io/' . $product;
+        $product_id = $organization . '/' . $product;
 
-        if ( ! isset( $data->issues->{ $product_id } ) ) {
+        if ( ! isset( $data->issues->{ $index_product_id } ) ) {
             return false;
         }
-        $product_issues = $data->issues->{$product_id};
+        $product_issues = $data->issues->{$index_product_id};
 
         if ( ! empty( $product_issues ) ) {
 
             if ( is_object( $product_issues ) ) {
-                $issue = new Richie_Editions_Issue( $product, $product_issues );
+                $issue = new Richie_Editions_Issue( $product_id, $product_issues );
                 return array( $issue );
             }
 
             foreach ( $product_issues as $issue_data ) {
-                $issue = new Richie_Editions_Issue( $product, $issue_data );
+                $issue = new Richie_Editions_Issue( $product_id, $issue_data );
                 array_push( $issues, $issue );
             }
         }

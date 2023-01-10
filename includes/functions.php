@@ -17,8 +17,10 @@
  * @return void
  */
 function richie_editions_create_editions_rewrite_rules( $flush = false ) {
-    add_rewrite_tag( '%richie_editions_redirect%', '([0-9a-fA-F-]+)' );
-    add_rewrite_rule( '^richie-editions-redirect/([0-9a-fA-F-]+)/?$', 'index.php?richie_editions_redirect=$matches[1]', 'top' );
+    add_rewrite_tag('%richie_action%', '([^&]+)');
+    add_rewrite_tag('%richie_prod%', '([^&]+)');
+    add_rewrite_tag( '%richie_issue%', '([0-9a-fA-F-]+)' );
+    add_rewrite_rule( '^richie-editions-redirect/([^/]*)/([^/]*)/([0-9a-fA-F-]+)/?$', 'index.php?richie_action=richie_editions_redirect&richie_prod=$matches[1]/$matches[2]&richie_issue=$matches[3]', 'top' );
 
     if ( $flush ) {
         flush_rewrite_rules();
@@ -109,17 +111,18 @@ function richie_editions_generate_signature_hash( $secret, $issue_id, $timestamp
 /**
  * Check if user has editions access
  *
- * Expects that current user is authenticated.
+ * Calls custom hook to check if user has access to editions. If no hook is registered, returns false.
  *
  * @since 1.0.0
  *
- * @global $current_user
+ * @param string $product Richie Editions product code.
+ * @param string $issue   Richie Editions issue code.
  *
  * @return boolean
  */
-function richie_has_editions_access( ) {
-    if ( ! is_user_logged_in() ) {
-        return false;
+function richie_has_editions_access( $product, $issue ) {
+    if ( has_filter( 'richie_editions_has_access' ) ) {
+        return apply_filters( 'richie_editions_has_access', (object) [ 'product' => $product, 'uuid' => $issue ] );
     }
-    return true;
+    return false;
 }

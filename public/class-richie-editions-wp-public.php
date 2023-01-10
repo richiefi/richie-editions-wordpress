@@ -165,8 +165,7 @@ class Richie_Editions_Wp_Public {
             return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
         }
 
-        $issues               = $editions_service->get_issues( $organization, $product, intval( $atts['number_of_issues'] ) );
-        $user_has_access      = richie_has_editions_access( );
+        $issues = $editions_service->get_issues( $organization, $product, intval( $atts['number_of_issues'] ) );
 
         if ( false === $issues ) {
             return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
@@ -237,8 +236,10 @@ class Richie_Editions_Wp_Public {
      */
     public function editions_redirect_request( $wp ) {
         if (
-            ! empty( $wp->query_vars['richie_editions_redirect'] ) &&
-            wp_is_uuid( $wp->query_vars['richie_editions_redirect'] )
+            $wp->query_vars['richie_action'] === 'richie_editions_redirect' &&
+            ! empty( $wp->query_vars['richie_issue'] ) &&
+            wp_is_uuid( $wp->query_vars['richie_issue'] ) &&
+            ! empty( $wp->query_vars['richie_prod'] )
         ) {
             if (
                 ! isset( $this->richie_options['editions_secret'] ) ||
@@ -255,11 +256,15 @@ class Richie_Editions_Wp_Public {
             }
 
             $hostname      = $this->richie_options['editions_hostname'];
-            $uuid          = $wp->query_vars['richie_editions_redirect'];
+            $product       = $wp->query_vars['richie_prod'];
+            $uuid          = $wp->query_vars['richie_issue'];
             $is_free_issue = $editions_service->is_issue_free( $uuid );
 
-            if ( ! $is_free_issue && ! richie_has_editions_access() ) {
-                $this->redirect_to_referer();
+            if ( ! $is_free_issue ) {
+                // check if user has access to this issue.
+                if ( ! richie_has_editions_access( $product, $uuid ) ) {
+                    $this->redirect_to_referer();
+                }
             }
 
             // has access, continue redirect.
@@ -287,7 +292,7 @@ class Richie_Editions_Wp_Public {
                 $query_string = $query_string . '&q=' . $wp->query_vars['search'];
             }
 
-            $url = "{$hostname}/_signin/${uuid}/${timestamp}/${hash}" . '?' . $query_string;
+            $url = "{$hostname}/_signin/{$uuid}/{$timestamp}/{$hash}" . '?' . $query_string;
             $this->do_redirect( $url );
         }
     }

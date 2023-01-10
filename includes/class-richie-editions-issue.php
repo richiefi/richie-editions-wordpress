@@ -91,6 +91,6 @@ class Richie_Editions_Issue {
      * @return url
      */
     public function get_redirect_url() {
-        return get_site_url( null, '/richie-editions-redirect/' . $this->uuid, 'relative' );
+        return get_site_url( null, '/richie-editions-redirect/' . $this->product . '/' . $this->uuid, 'relative' );
     }
 }
