@@ -136,3 +136,9 @@ function get_richie_editions_user_jwt_token( $product, $issue ) {
 
     return $jwt_token;
 }
+
+function richie_editions_build_url( $hostname, $path ) {
+    $url = parse_url( $hostname );
+
+    return $url['scheme'] . '://' . $url['host'] . $path;
+}

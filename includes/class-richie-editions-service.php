@@ -270,7 +270,7 @@ class Richie_Editions_Service {
     public function __construct( $host_name, $index_path = '/_data/index.json' ) {
         $minimum_cache_time   = MINUTE_IN_SECONDS;
         $maximum_cache_time   = 0; // No cache.
-        $index_url            = $host_name . $index_path;
+        $index_url            = richie_editions_build_url( $host_name, $index_path );
         $this->cached_request = new Richie_Editions_Cached_Request( $index_url, $minimum_cache_time, $maximum_cache_time );
     }
 

@@ -181,6 +181,12 @@ class Richie_Editions_Wp_Admin {
 
         if ( ! empty( $valid['editions_hostname'] ) && ( $current_hostname !== $valid['editions_hostname'] || $current_index !== $valid['editions_index_range'] ) ) {
             // Force cache refresh if hostname or index range changes.
+            $ranges = $this->get_available_indexes( $valid['editions_hostname'] );
+            if ( $input['editions_index_range'] === $current_index ) {
+                // reset index range if hostname is changed and index range is not
+                $valid['editions_index_range'] = $ranges[0]['value'];
+            }
+
             $editions_service = new Richie_Editions_Service( $valid['editions_hostname'], $valid['editions_index_range'] );
             $editions_service->refresh_cached_response( true );
         }
@@ -246,24 +252,30 @@ class Richie_Editions_Wp_Admin {
 
         // Create maggio section.
         $section = new Richie_Editions_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
-        $section->add_field( 'editions_hostname', __( 'Editions hostname', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
-        $section->add_field( 'editions_secret', __( 'Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
+        $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
+        $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
 
 
         // 'all' and 'latest' are available as default, other options can be updated.
         $available_indexes = $this->get_available_indexes();
         $selected = isset( $options['editions_index_range'] ) ? $options['editions_index_range'] : '/_data/index.json';
-        $section->add_field( 'editions_index_range', __( 'Editions index range', 'richie-editions-wp' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => 'Select index to use. "All" contains all issues, other options contain issues from specific range. To get available options, save Editions Hostname setting first.' ) );
+        $section->add_field( 'editions_index_range', __( 'Richie Editions index range', 'richie-editions-wp' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => 'Select index to use. "All" contains all issues, other options contain issues from specific range. To get available options, save Editions Hostname setting first.' ) );
     }
 
-    public function get_available_indexes() {
+    public function get_available_indexes( $baseurl = false ) {
         $options = get_option( $this->settings_option_name );
 
         $available_indexes = array();
 
-        if ( isset( $options['editions_hostname'] ) ) {
+        if ( ! empty( $baseurl ) ) {
+            $host_url = $baseurl;
+        } else {
+            $host_url = isset( $options['editions_hostname'] ) ? $options['editions_hostname'] : false;
+        }
+
+        if ( $host_url ) {
             // We have hostname set, fetch available from the server.
-            $url      = $options['editions_hostname'] . '/_data/server_config.json';
+            $url      = $host_url . '/_data/server_config.json';
             $response = wp_remote_get( $url );
             $body     = wp_remote_retrieve_body( $response );
 
