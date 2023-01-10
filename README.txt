@@ -1,11 +1,80 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
+=== Richie Editions WP ===
+Contributors: makkeu
 Donate link: https://www.richie.fi
 Tags: richie, shortcode, editions
 Requires at least: 5.0
-Tested up to: 6.0
+Tested up to: 6.1.1
+Stable Tag: 1.0.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+== Description ==
+
+This plugin aims to make it easier to integrate Richie Editions e-paper content onto WordPress sites.
+
+== Installation ==
+
+1. Upload `richie-editions-wp` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in Wordpress.
+3. Configure required settings under 'Settings -> Richie Editions'.
+4. Provide custom filter hook for checking access:
+
+```
+function test_access( $issue ) {
+    // http://wordpress.local/richie-editions-redirect/org/prod/uuid
+    // Issue contains product code ([org]/[prod]) and issue guid, which can be used to check if user should get
+    // access to the issue.
+    if ( $issue->product === 'org/prod' && $issue->uuid === 'uuid' ) {
+        return true;
+    }
+    return false;
+}
+
+add_filter('richie_editions_has_access', 'test_access');
+```
+
+OR provide a jwt token:
+
+```
+function get_user_jwt_token( $issue ) {
+  $token = ...;
+  return $token;
+}
+
+add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
+```
+
+
+== Changelog ==
+
+= 1.0.0 (10.01.2023) =
+* Initial plugin code base
+
+== Configuration ==
+
+1. `Editions hostname` - Full hostname to the Richie Editions HTML5 server, can be https://<client>.ap.richiefi.net or configured cname
+2. `Editions secret` - Provided secret which is used to calculate signature hash for signin urls (required if not using jwt token)
+3. `Editions index range` - Select which index to use. To get available options, save hostname setting first.
+4. `Editions error url` - Url to redirect user if opening issue fails (no access)
+
+== Shortcode ==
+
+Plugin provides `[richie_editions]` shortcode, which may be used to show grid of available issues.
+Shortcode supports two attributes:
+  - `product` (required): Richie Editions product id in form `[organization]/[product]`
+  - `number_of_issues` (optional): Amount of issues to be shown. If omitted, shows all issues.
+
+Example:
+```
+[richie_editions product="fleet_street_journal/fleet_street_journal" number_of_issues="10]
+```
+
+Short code renders a template, which the theme may overwrite.
+This can be done by placing `richie-editions-index.php` inside `<theme_path>/richie-editions` folder.
+A basic template as a base can be found inside plugin's templates folder.
+
+== Technical Details ==
 
 # Richie Editions WordPress Plugin
 
@@ -38,3 +107,4 @@ The plugin can also delegate the access control decision to the Richie Editions 
 ### ERROR HANDLING
 
 In both of these scenarios, the plugin will either 1) redirect the user to the requested issue in Richie Editions or, in the case of an error, redirect them to the error page you have configured the in plugin configuration.
+
