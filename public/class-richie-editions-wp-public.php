@@ -330,7 +330,7 @@ class Richie_Editions_Wp_Public {
             }
 
             if ( ! empty( $redirect_url ) ) {
-                $this->do_redirect( $redirect_url );
+                $this->do_redirect( esc_url_raw( $redirect_url ) );
             } else {
                 $this->redirect_to_referer();
             }
