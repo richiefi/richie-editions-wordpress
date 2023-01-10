@@ -1,0 +1,93 @@
+# Copyright (C) 2023 Richie OY
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Richie Editions WP 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/richie-editions-wp\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-10T07:36:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: richie-editions-wp\n"
+
+#. Plugin Name of the plugin
+msgid "Richie Editions WP"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/richiefi/richie-editions-wordpress-plugin"
+msgstr ""
+
+#. Description of the plugin
+msgid "This plugin aims to make it easier to integrate Richie Editions e-paper content onto WordPress sites."
+msgstr ""
+
+#. Author of the plugin
+msgid "Richie OY"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.richie.fi"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:150
+msgid "Settings"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:249
+msgid "Richie Editions settings"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:250
+msgid "Editions organization"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:251
+msgid "Editions hostname"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:252
+msgid "Editions secret"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:258
+msgid "Editions index range"
+msgstr ""
+
+#: admin/partials/richie-editions-admin-display.php:32
+msgid "Save all changes"
+msgstr ""
+
+#: includes/functions.php:91
+msgid "Missing secret"
+msgstr ""
+
+#: includes/functions.php:95
+msgid "Invalid issue uuid"
+msgstr ""
+
+#: includes/functions.php:99
+msgid "Invalid timestamp, it must be an integer"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:140
+msgid "Invalid configuration, missing hostname in settings"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:154
+msgid "\"product\" attribute is required"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:158
+msgid "Invalid organization"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:167
+#: public/class-richie-editions-wp-public.php:174
+#: public/class-richie-editions-wp-public.php:256
+msgid "Failed to fetch issues"
+msgstr ""

@@ -29,6 +29,6 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
             do_settings_sections($this->settings_option_name);
         ?>
 
-        <?php submit_button(esc_html__('Save all changes', 'richie'), 'primary','submit', TRUE); ?>
+        <?php submit_button(esc_html__('Save all changes', 'richie-editions-wp'), 'primary','submit', TRUE); ?>
     </form>
 </div>

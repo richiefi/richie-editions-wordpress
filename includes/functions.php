@@ -88,15 +88,15 @@ function richie_editions_build_query( $params ) {
  */
 function richie_editions_generate_signature_hash( $secret, $issue_id, $timestamp, $query_string = '' ) {
     if ( ! isset( $secret ) ) {
-        return new WP_Error( 'secret', __( 'Missing secret', 'richie') );
+        return new WP_Error( 'secret', __( 'Missing secret', 'richie-editions-wp' ) );
     }
 
     if ( ! wp_is_uuid( $issue_id ) ) {
-        return new WP_Error( 'uuid', __( 'Invalid issue uuid', 'richie' ) );
+        return new WP_Error( 'uuid', __( 'Invalid issue uuid', 'richie-editions-wp' ) );
     }
 
     if ( ! is_int( $timestamp ) ) {
-        return new WP_Error( 'timestamp', __( 'Invalid timestamp, it must be an integer', 'richie' ) );
+        return new WP_Error( 'timestamp', __( 'Invalid timestamp, it must be an integer', 'richie-editions-wp' ) );
     }
 
     $signature_data = $issue_id . "\n" . $timestamp . "\n" . $query_string;

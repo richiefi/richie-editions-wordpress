@@ -137,7 +137,7 @@ class Richie_Editions_Wp_Public {
      */
     public function load_editions_index_content( $attributes ) {
         if ( ! isset( $this->richie_options['editions_hostname'] ) || empty( $this->richie_options['editions_hostname'] ) ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'Invalid configuration, missing hostname in settings', 'richie' ) );
+            return sprintf( '<div>%s</div>', esc_html__( 'Invalid configuration, missing hostname in settings', 'richie-editions-wp' ) );
         }
 
         $atts = shortcode_atts(
@@ -151,11 +151,11 @@ class Richie_Editions_Wp_Public {
         );
 
         if ( empty( $atts['product'] ) ) {
-            return sprintf( '<div>%s</div>', esc_html__( '"product" attribute is required', 'richie' ) );
+            return sprintf( '<div>%s</div>', esc_html__( '"product" attribute is required', 'richie-editions-wp' ) );
         }
 
         if ( empty( $atts['organization'] ) ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'Invalid organization', 'richie' ) );
+            return sprintf( '<div>%s</div>', esc_html__( 'Invalid organization', 'richie-editions-wp' ) );
         }
 
         $organization   = $atts['organization'];
@@ -164,14 +164,14 @@ class Richie_Editions_Wp_Public {
         $editions_service = $this->get_editions_service();
 
         if ( false === $editions_service ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie' ) );
+            return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
         }
 
         $issues               = $editions_service->get_issues( $organization, $product, intval( $atts['number_of_issues'] ) );
         $user_has_access      = richie_has_editions_access( );
 
         if ( false === $issues ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie' ) );
+            return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
         }
 
         $richie_template_loader = new Richie_Editions_Template_Loader();
@@ -253,7 +253,7 @@ class Richie_Editions_Wp_Public {
             $editions_service = $this->get_editions_service();
 
             if ( false === $editions_service ) {
-                return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie' ) );
+                return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
             }
 
             $hostname      = $this->richie_options['editions_hostname'];

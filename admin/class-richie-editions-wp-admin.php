@@ -147,7 +147,7 @@ class Richie_Editions_Wp_Admin {
         *  Documentation : https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
         */
         $settings_link = array(
-            '<a href="' . admin_url( 'options-general.php?page=' . $this->settings_page_slug ) . '">' . __( 'Settings', 'richie' ) . '</a>',
+            '<a href="' . admin_url( 'options-general.php?page=' . $this->settings_page_slug ) . '">' . __( 'Settings', 'richie-editions-wp' ) . '</a>',
         );
         return array_merge( $settings_link, $links );
 
@@ -246,16 +246,16 @@ class Richie_Editions_Wp_Admin {
         $editions_section_name  = 'richie_editions';
 
         // Create maggio section.
-        $section = new Richie_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie' ), $this->settings_option_name );
-        $section->add_field( 'editions_organization', __( 'Editions organization', 'richie' ), 'input_field', array( 'value' => $options['editions_organization'] ) );
-        $section->add_field( 'editions_hostname', __( 'Editions hostname', 'richie' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
-        $section->add_field( 'editions_secret', __( 'Editions secret', 'richie' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
+        $section = new Richie_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
+        $section->add_field( 'editions_organization', __( 'Editions organization', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_organization'] ) );
+        $section->add_field( 'editions_hostname', __( 'Editions hostname', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
+        $section->add_field( 'editions_secret', __( 'Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
 
 
         // 'all' and 'latest' are available as default, other options can be updated.
         $available_indexes = $this->get_available_indexes();
         $selected = isset( $options['editions_index_range'] ) ? $options['editions_index_range'] : '/_data/index.json';
-        $section->add_field( 'editions_index_range', __( 'Editions index range', 'richie' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => 'Select index to use. "All" contains all issues, other options contain issues from specific range. To get available options, save Editions Hostname setting first.' ) );
+        $section->add_field( 'editions_index_range', __( 'Editions index range', 'richie-editions-wp' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => 'Select index to use. "All" contains all issues, other options contain issues from specific range. To get available options, save Editions Hostname setting first.' ) );
     }
 
     public function get_available_indexes() {
