@@ -126,3 +126,13 @@ function richie_has_editions_access( $product, $issue ) {
     }
     return false;
 }
+
+function get_richie_editions_user_jwt_token( $product, $issue ) {
+    $jwt_token = false;
+    // Check if hook is registered to get user jwt token
+    if ( has_filter( 'richie_editions_user_jwt_token' ) ) {
+        $jwt_token  = apply_filters( 'richie_editions_user_jwt_token', (object) [ 'product' => $product, 'uuid' => $issue ] );
+    }
+
+    return $jwt_token;
+}

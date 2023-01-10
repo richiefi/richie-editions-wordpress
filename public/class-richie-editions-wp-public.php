@@ -236,6 +236,7 @@ class Richie_Editions_Wp_Public {
      */
     public function editions_redirect_request( $wp ) {
         if (
+            ! empty( $wp->query_vars['richie_action'] ) &&
             $wp->query_vars['richie_action'] === 'richie_editions_redirect' &&
             ! empty( $wp->query_vars['richie_issue'] ) &&
             wp_is_uuid( $wp->query_vars['richie_issue'] ) &&
@@ -260,40 +261,75 @@ class Richie_Editions_Wp_Public {
             $uuid          = $wp->query_vars['richie_issue'];
             $is_free_issue = $editions_service->is_issue_free( $uuid );
 
+            $has_access = false;
+
             if ( ! $is_free_issue ) {
                 // check if user has access to this issue.
                 if ( ! richie_has_editions_access( $product, $uuid ) ) {
-                    $this->redirect_to_referer();
+                    // try to get jwt token.
+
+                    $jwt_token = get_richie_editions_user_jwt_token( $product, $uuid );
+
+                    if ( false ===  $jwt_token ) {
+                        $this->redirect_to_referer();
+                    }
+                } else {
+                    $has_access = true;
                 }
             }
 
-            // has access, continue redirect.
-            $timestamp = time();
+            if ( $has_access ) {
+                // has access, continue redirect with signin link.
+                $timestamp = time();
 
-            $secret = $this->richie_options['editions_secret'];
+                $secret = $this->richie_options['editions_secret'];
 
-            $return_link = wp_get_referer() ? wp_get_referer() : get_home_url();
+                $return_link = wp_get_referer() ? wp_get_referer() : get_home_url();
 
-            $auth_params = array(
-                array( 'key' => 'return_link', 'value' => $return_link )
-            );
+                $auth_params = array(
+                    array( 'key' => 'return_link', 'value' => $return_link )
+                );
 
-            $query_string = richie_editions_build_query( $auth_params );
+                $query_string = richie_editions_build_query( $auth_params );
 
-            $hash = richie_editions_generate_signature_hash( $secret, $uuid, $timestamp, $query_string );
+                $hash = richie_editions_generate_signature_hash( $secret, $uuid, $timestamp, $query_string );
 
-            // Pass extra query params to signin route.
-            if ( ! empty( $wp->query_vars['page'] ) ) {
-                $query_string = $query_string . '&page=' . $wp->query_vars['page'];
+                // Pass extra query params to signin route.
+                if ( ! empty( $wp->query_vars['page'] ) ) {
+                    $query_string = $query_string . '&page=' . $wp->query_vars['page'];
+                }
+
+                if ( ! empty( $wp->query_vars['search'] ) ) {
+                    // Support for search term, if needed in the future.
+                    $query_string = $query_string . '&q=' . $wp->query_vars['search'];
+                }
+
+                $redirect_url = "{$hostname}/_signin/{$uuid}/{$timestamp}/{$hash}" . '?' . $query_string;
+
+            } else if ( $jwt_token ) {
+                // has jwt token, continue redirect with remote link generation
+                [ $org ] = explode( '/', $product );
+                $remote_url = "{$hostname}/{$org}/_get_link_with_token/{$uuid}";
+
+                $request_args = array(
+                    'headers' => array(
+                        'Authorization' => 'Bearer ' . $jwt_token
+                    )
+                );
+
+                $response  = wp_remote_get( $remote_url, $request_args );
+                $http_code = wp_remote_retrieve_response_code( $response );
+
+                if ( $http_code === 200 ) {
+                    $redirect_url = wp_remote_retrieve_body( $response );
+                }
             }
 
-            if ( ! empty( $wp->query_vars['search'] ) ) {
-                // Support for search term, if needed in the future.
-                $query_string = $query_string . '&q=' . $wp->query_vars['search'];
+            if ( ! empty( $redirect_url ) ) {
+                $this->do_redirect( $redirect_url );
+            } else {
+                $this->redirect_to_referer();
             }
-
-            $url = "{$hostname}/_signin/{$uuid}/{$timestamp}/{$hash}" . '?' . $query_string;
-            $this->do_redirect( $url );
         }
     }
 
