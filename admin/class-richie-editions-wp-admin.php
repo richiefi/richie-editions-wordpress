@@ -173,7 +173,6 @@ class Richie_Editions_Wp_Admin {
 
         $valid['editions_secret']             = isset( $input['editions_secret'] ) ? sanitize_text_field( $input['editions_secret'] ) : '';
         $valid['editions_hostname']           = isset( $input['editions_hostname'] ) ? esc_url_raw( $input['editions_hostname'] ) : '';
-        $valid['editions_organization']         = isset( $input['editions_organization'] ) ? sanitize_text_field( $input['editions_organization'] ) : '';
         $valid['editions_index_range']          = isset( $input['editions_index_range'] ) ? sanitize_text_field( $input['editions_index_range'] ) : '';
 
         $options          = get_option( $this->settings_option_name );
@@ -247,7 +246,6 @@ class Richie_Editions_Wp_Admin {
 
         // Create maggio section.
         $section = new Richie_Editions_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
-        $section->add_field( 'editions_organization', __( 'Editions organization', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_organization'] ) );
         $section->add_field( 'editions_hostname', __( 'Editions hostname', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
         $section->add_field( 'editions_secret', __( 'Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
 

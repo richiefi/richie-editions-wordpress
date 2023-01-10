@@ -143,7 +143,6 @@ class Richie_Editions_Wp_Public {
         $atts = shortcode_atts(
             array(
                 'product'          => null,
-                'organization'     => isset( $this->richie_options['editions_organization'] ) ? $this->richie_options['editions_organization'] : null,
                 'number_of_issues' => null,
             ),
             $attributes,
@@ -154,12 +153,11 @@ class Richie_Editions_Wp_Public {
             return sprintf( '<div>%s</div>', esc_html__( '"product" attribute is required', 'richie-editions-wp' ) );
         }
 
-        if ( empty( $atts['organization'] ) ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'Invalid organization', 'richie-editions-wp' ) );
-        }
+        [ $organization, $product ] = explode( '/', $atts['product'] );
 
-        $organization   = $atts['organization'];
-        $product        = $atts['product'];
+        if ( empty( $organization ) || empty( $product ) ) {
+            return sprintf( '<div>%s</div>', esc_html__( 'Invalid product code', 'richie-editions-wp' ) );
+        }
 
         $editions_service = $this->get_editions_service();
 
