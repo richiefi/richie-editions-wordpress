@@ -173,7 +173,8 @@ class Richie_Editions_Wp_Admin {
 
         $valid['editions_secret']             = isset( $input['editions_secret'] ) ? sanitize_text_field( $input['editions_secret'] ) : '';
         $valid['editions_hostname']           = isset( $input['editions_hostname'] ) ? esc_url_raw( $input['editions_hostname'] ) : '';
-        $valid['editions_index_range']          = isset( $input['editions_index_range'] ) ? sanitize_text_field( $input['editions_index_range'] ) : '';
+        $valid['editions_index_range']        = isset( $input['editions_index_range'] ) ? sanitize_text_field( $input['editions_index_range'] ) : '';
+        $valid['editions_error_url']          = isset( $input['editions_error_url'] ) ? esc_url( $input['editions_error_url'] ) : '';
 
         $options          = get_option( $this->settings_option_name );
         $current_hostname = isset( $options['editions_hostname'] ) ? $options['editions_hostname'] : '';
@@ -254,6 +255,7 @@ class Richie_Editions_Wp_Admin {
         $section = new Richie_Editions_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
         $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
         $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
+        $section->add_field( 'editions_error_url', __( 'Richie Editions Web Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_error_url'], 'description' => __("Redirect url if user isn't authorized to open issue", 'richie-editions-wp' ) ) );
 
 
         // 'all' and 'latest' are available as default, other options can be updated.

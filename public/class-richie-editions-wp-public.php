@@ -232,6 +232,16 @@ class Richie_Editions_Wp_Public {
         }
     }
 
+    public function redirect_to_error_page() {
+        $error_url = $this->richie_options['editions_error_url'];
+
+        if ( ! empty( $error_url ) ) {
+            $this->do_redirect( $error_url );
+        } else {
+            $this->redirect_to_referer();
+        }
+    }
+
     /**
      * Create redirection to editions signin service.
      * Exits process after redirection.
@@ -247,11 +257,12 @@ class Richie_Editions_Wp_Public {
             ! empty( $wp->query_vars['richie_prod'] )
         ) {
             if (
-                ! isset( $this->richie_options['editions_secret'] ) ||
-                ! isset( $this->richie_options['editions_hostname'] )
+                empty ( $this->richie_options['editions_hostname'] )
             ) {
                 // invalid configuration.
-                $this->redirect_to_referer();
+                //$this->redirect_to_referer();
+                wp_die('Invalid configuration, missing hostname or secret in settings');
+                return;
             }
 
             $editions_service = $this->get_editions_service();
@@ -264,25 +275,25 @@ class Richie_Editions_Wp_Public {
             $product       = $wp->query_vars['richie_prod'];
             $uuid          = $wp->query_vars['richie_issue'];
             $is_free_issue = $editions_service->is_issue_free( $uuid );
-
+            $missing_secret = empty( $this->richie_options['editions_secret'] );
             $has_access = false;
 
             if ( ! $is_free_issue ) {
                 // check if user has access to this issue.
-                if ( ! richie_has_editions_access( $product, $uuid ) ) {
+                if ( ! richie_has_editions_access( $product, $uuid ) || $missing_secret ) {
                     // try to get jwt token.
 
                     $jwt_token = get_richie_editions_user_jwt_token( $product, $uuid );
 
                     if ( false ===  $jwt_token ) {
-                        $this->redirect_to_referer();
+                        $this->redirect_to_error_page();
                     }
                 } else {
                     $has_access = true;
                 }
             }
 
-            if ( $has_access ) {
+            if ( $has_access && ! $missing_secret ) {
                 // has access, continue redirect with signin link.
                 $timestamp = time();
 
@@ -332,7 +343,7 @@ class Richie_Editions_Wp_Public {
             if ( ! empty( $redirect_url ) ) {
                 $this->do_redirect( esc_url_raw( $redirect_url ) );
             } else {
-                $this->redirect_to_referer();
+                $this->redirect_to_error_page();
             }
         }
     }
