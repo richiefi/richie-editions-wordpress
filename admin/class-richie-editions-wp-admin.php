@@ -172,7 +172,7 @@ class Richie_Editions_Wp_Admin {
         $valid = array();
 
         $valid['editions_secret']             = isset( $input['editions_secret'] ) ? sanitize_text_field( $input['editions_secret'] ) : '';
-        $valid['editions_hostname']           = isset( $input['editions_hostname'] ) ? esc_url_raw( $input['editions_hostname'] ) : '';
+        $valid['editions_hostname']           = isset( $input['editions_hostname'] ) ? esc_url_raw( untrailingslashit( $input['editions_hostname'] ) ) : '';
         $valid['editions_index_range']        = isset( $input['editions_index_range'] ) ? sanitize_text_field( $input['editions_index_range'] ) : '';
         $valid['editions_error_url']          = isset( $input['editions_error_url'] ) ? esc_url( $input['editions_error_url'] ) : '';
 
