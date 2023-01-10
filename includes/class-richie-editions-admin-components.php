@@ -70,4 +70,40 @@ class Richie_Editions_Admin_Components {
             printf( '<span class="description">%s</span>', esc_html( $args['description'] ) );
         }
     }
+
+        /**
+     * Render select box for given options
+     *
+     * @param array $args  Rendering options.
+     *   string[] options Array of options.
+     * @return void
+     */
+    public function select_field( array $args ) {
+        $id          = $args['id'];
+        $option_name = $args['option_name'];
+        $name        = $option_name . '[' . $id . ']';
+        $options     = $args['options'];
+        $required    = isset( $args['required'] ) && true === $args['required'] ? 'required' : '';
+        $selected    = isset( $args['selected'] ) ? $args['selected'] : null;
+
+        ?>
+        <select name='<?php echo esc_attr( $name ); ?>' id='<?php echo esc_attr( $id ); ?>' <?php echo esc_attr( $required ); ?>>
+            <?php foreach ( $options as $opt ) : ?>
+                <?php
+                if ( isset( $opt['value'] ) ) {
+                    $value = $opt['value'];
+                    $title = isset( $opt['title'] ) ? $opt['title'] : $opt['value'];
+                } else {
+                    $value = $opt;
+                    $title = $opt;
+                }
+                ?>
+                <option value='<?php echo esc_attr( $value ); ?>' <?php selected( $selected, $value, true ); ?>><?php echo esc_attr( $title ); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php
+        if ( isset( $args['description'] ) ) {
+            printf( '<div><span class="description">%s</span></div>', esc_html( $args['description'] ) );
+        }
+    }
 }

@@ -66,7 +66,7 @@ function richie_editions_key_value_sort( $array ) {
  * @return string Query string key=value&key2=value2&... sorted by key and value
  */
 function richie_editions_build_query( $params ) {
-    $sorted = richie_key_value_sort( $params );
+    $sorted = richie_editions_key_value_sort( $params );
     $mapper = function( $param ) {
         return $param['key'] . '=' . $param['value'];
     };

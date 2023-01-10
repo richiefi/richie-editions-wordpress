@@ -55,8 +55,8 @@ class Richie_Editions_Settings_Section {
      * @throws Exception Throws an general exepction if required arguments missing.
      */
     public function __construct( $section_slug, $section_title, $option_name ) {
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-richie-admin-components.php';
-        $this->admin_components = new Richie_Admin_Components();
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-richie-editions-admin-components.php';
+        $this->admin_components = new Richie_Editions_Admin_Components();
 
         if ( empty( $section_slug ) || empty( $section_title ) || empty( $option_name ) ) {
             throw new Exception( 'Invalid arguments' );
