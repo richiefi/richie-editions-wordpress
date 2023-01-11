@@ -6,8 +6,7 @@ Requires at least: 5.0
 Tested up to: 6.1.1
 Stable Tag: 1.0.0
 Requires PHP: 7.4
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: Copyright Richie OY
 
 == Description ==
 
@@ -24,7 +23,7 @@ This plugin aims to make it easier to integrate Richie Editions e-paper content 
 function test_access( $issue ) {
     // http://wordpress.local/richie-editions-redirect/org/prod/uuid
     // Issue contains product code ([org]/[prod]) and issue guid, which can be used to check if user should get
-    // access to the issue.
+    // access to the issue. Richie Editions secret is required in settings.
     if ( $issue->product === 'org/prod' && $issue->uuid === 'uuid' ) {
         return true;
     }
@@ -53,7 +52,7 @@ add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
 
 == Configuration ==
 
-1. `Editions hostname` - Full hostname to the Richie Editions HTML5 server, can be https://<client>.ap.richiefi.net or configured cname
+1. `Editions web url` - Full web url to the Richie Editions HTML5 server, can be https://<client>.ap.richiefi.net/<subtenant> or using configured cname
 2. `Editions secret` - Provided secret which is used to calculate signature hash for signin urls (required if not using jwt token)
 3. `Editions index range` - Select which index to use. To get available options, save hostname setting first.
 4. `Editions error url` - Url to redirect user if opening issue fails (no access)
@@ -98,11 +97,11 @@ Richie Editions focuses on premium (paid for) e-paper content, so access to the 
 
 ### IF YOU HAVE DIRECT KNOWLEDGE OF THE PRODUCTS THE USER CAN ACCESS
 
-When you know whether a logged-in user can access a specific product, you implement the `richie_editions_can_access_product($product, $issue_uuid)` global function that will return a boolean value that indicates whether the user should be granted access to the specific product. Access checks are typically made on a per-product basis, but the plugin will also include the issue identifier in the call. Note that if the issue has been marked as free in Richie Editions, the plugin will grant access directly and this function will not be called.
+When you know whether a logged-in user can access a specific product, you implement the `richie_editions_can_access_product($product, $issue_uuid)` custom filter hook that will return a boolean value that indicates whether the user should be granted access to the specific product. Access checks are typically made on a per-product basis, but the plugin will also include the issue identifier in the call. Note that if the issue has been marked as free in Richie Editions, the plugin will grant access directly and this function will not be called.
 
 ### IF YOU DON'T KNOW THE PRODUCTS THE USER HAS ACCESS TO
 
-The plugin can also delegate the access control decision to the Richie Editions service. In this scenario, you implement the `richie_editions_user_jwt_token()` function that returns a JWT token as a string, or NULL if no token is available. The plugin will make a HTTP call to the Richie Editions backend to determine whether the token grants access to the given product.
+The plugin can also delegate the access control decision to the Richie Editions service. In this scenario, you implement the `richie_editions_user_jwt_token()` filter hook that returns a JWT token as a string, or false if no token is available. The plugin will make a HTTP call to the Richie Editions backend to determine whether the token grants access to the given product.
 
 ### ERROR HANDLING
 
