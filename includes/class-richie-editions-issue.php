@@ -81,7 +81,7 @@ class Richie_Editions_Issue {
      * @return url
      */
     public function get_cover( $width, $height ) {
-        $url = $this->master_cover->url . '?width=' . $width . '&height=' . $height;
+        $url = $this->master_cover->url . '?width=' . $width . '&height=' . $height . '&format=jpeg';
         return $url;
     }
 
