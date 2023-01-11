@@ -1,0 +1,152 @@
+# Copyright (C) 2023 Richie OY
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Richie Editions WP 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/richie-editions-"
+"wp\n"
+"Last-Translator: \n"
+"Language-Team: Suomi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-11T07:40:58+00:00\n"
+"PO-Revision-Date: 2023-01-11 08:14+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: richie-editions-wp\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.6.3; wp-6.1.1"
+
+#: public/class-richie-editions-wp-public.php:153
+msgid "\"product\" attribute is required"
+msgstr "\"product\" parametri on vaadittu"
+
+#: admin/class-richie-editions-wp-admin.php:274
+msgid "180 days"
+msgstr "180 päivää"
+
+#: admin/class-richie-editions-wp-admin.php:271
+msgid "30 days"
+msgstr "30 päivää"
+
+#: admin/class-richie-editions-wp-admin.php:272
+msgid "60 days"
+msgstr "60 päivää"
+
+#: admin/class-richie-editions-wp-admin.php:273
+msgid "90 days"
+msgstr "90 päivää"
+
+#: admin/class-richie-editions-wp-admin.php:269
+#: admin/class-richie-editions-wp-admin.php:320
+msgid "All"
+msgstr "Kaikki"
+
+#: public/class-richie-editions-wp-public.php:169
+#: public/class-richie-editions-wp-public.php:175
+#: public/class-richie-editions-wp-public.php:271
+msgid "Failed to fetch issues"
+msgstr "Näköislehtien lataus epäonnistui"
+
+#. Plugin URI of the plugin
+msgid "https://github.com/richiefi/richie-editions-wordpress-plugin"
+msgstr "https://github.com/richiefi/richie-editions-wordpress-plugin"
+
+#. Author URI of the plugin
+msgid "https://www.richie.fi"
+msgstr "https://www.richie.fi"
+
+#: public/class-richie-editions-wp-public.php:140
+msgid "Invalid configuration, missing hostname in settings"
+msgstr "Virheelliset asetukset, Richie Editions verkko-osoite puuttuu"
+
+#: includes/functions.php:97
+msgid "Invalid issue uuid"
+msgstr "Virheellinen lehden tunniste"
+
+#: public/class-richie-editions-wp-public.php:163
+msgid "Invalid product code"
+msgstr "Virheellinen tuotekoodi"
+
+#: includes/functions.php:101
+msgid "Invalid timestamp, it must be an integer"
+msgstr "Virheellinen aikaleima, pitää olla kokonaisluku"
+
+#: admin/class-richie-editions-wp-admin.php:270
+#: admin/class-richie-editions-wp-admin.php:324
+msgid "Latest"
+msgstr "Uusin"
+
+#: includes/functions.php:93
+msgid "Missing secret"
+msgstr "Puuttuva salausavain"
+
+#: admin/class-richie-editions-wp-admin.php:258
+msgid "Redirect url if user isn't authorized to open issue"
+msgstr "Käyttäjä ohjataan tälle sivulle, jos lehteen ei ole pääsyä"
+
+#: admin/class-richie-editions-wp-admin.php:256
+msgid "Required. Richie Editions web url, including possible subtenant."
+msgstr ""
+"Vaadittu. Richie Editions täydellinen verkko-osoite, sisältäen mahdollisen "
+"alipolun."
+
+#: admin/class-richie-editions-wp-admin.php:264
+msgid "Richie Editions index range"
+msgstr "Richie Editions indeksi"
+
+#: admin/class-richie-editions-wp-admin.php:257
+msgid "Richie Editions secret"
+msgstr "Richie Editions salausavain"
+
+#: admin/class-richie-editions-wp-admin.php:257
+msgid ""
+"Richie Editions secret key. This is required if using custom access control."
+msgstr ""
+"Richie Editions salausavain. Tämä on vaadittu käytettäessä omaa "
+"pääsynhallintaa. "
+
+#: admin/class-richie-editions-wp-admin.php:255
+msgid "Richie Editions settings"
+msgstr "Richie Editions asetukset"
+
+#: admin/class-richie-editions-wp-admin.php:258
+msgid "Richie Editions Web Error URL"
+msgstr "Richie Editions virhesivu"
+
+#: admin/class-richie-editions-wp-admin.php:256
+msgid "Richie Editions Web URL"
+msgstr "Richie editions verkko-osoite"
+
+#. Plugin Name of the plugin
+msgid "Richie Editions WP"
+msgstr "Richie Editions WP"
+
+#. Author of the plugin
+msgid "Richie OY"
+msgstr "Richie OY"
+
+#: admin/partials/richie-editions-admin-display.php:32
+msgid "Save all changes"
+msgstr "Tallenna kaikki muutokset"
+
+#: admin/class-richie-editions-wp-admin.php:264
+msgid ""
+"Select index to use. To get available options, save Editions Hostname "
+"setting first."
+msgstr ""
+"Valitse käytettävä indeksi. Saadaksesi saatavilla olevat vaihtoehdot, "
+"tallenna Richie Editions verkko-osoite ensin."
+
+#: admin/class-richie-editions-wp-admin.php:150
+msgid "Settings"
+msgstr "Asetukset"
+
+#. Description of the plugin
+msgid ""
+"This plugin aims to make it easier to integrate Richie Editions e-paper "
+"content onto WordPress sites."
+msgstr ""
+"Tämä lisäosa auttaa integroimaan Richie Editionsin e-paper-sisällön "
+"WordPress-sivustoille helpommaksi."

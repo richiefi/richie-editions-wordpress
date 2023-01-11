@@ -253,15 +253,31 @@ class Richie_Editions_Wp_Admin {
 
         // Create maggio section.
         $section = new Richie_Editions_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
-        $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ) );
-        $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ) );
+        $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'], 'description' => __('Required. Richie Editions web url, including possible subtenant.', 'richie-editions-wp') ) );
+        $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'], 'description' => __('Richie Editions secret key. This is required if using custom access control.', 'richie-editions-wp') ) );
         $section->add_field( 'editions_error_url', __( 'Richie Editions Web Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_error_url'], 'description' => __("Redirect url if user isn't authorized to open issue", 'richie-editions-wp' ) ) );
 
 
         // 'all' and 'latest' are available as default, other options can be updated.
         $available_indexes = $this->get_available_indexes();
         $selected = isset( $options['editions_index_range'] ) ? $options['editions_index_range'] : '/_data/index.json';
-        $section->add_field( 'editions_index_range', __( 'Richie Editions index range', 'richie-editions-wp' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => 'Select index to use. "All" contains all issues, other options contain issues from specific range. To get available options, save Editions Hostname setting first.' ) );
+        $section->add_field( 'editions_index_range', __( 'Richie Editions index range', 'richie-editions-wp' ), 'select_field', array( 'options' => $available_indexes, 'selected' => $selected, 'description' => __('Select index to use. To get available options, save Editions Hostname setting first.', 'richie-editions-wp' ) ) );
+    }
+
+    private function get_translated_index_title( $title ) {
+        $translations = array(
+            'all'    => __( 'All', 'richie-editions-wp' ),
+            'latest' => __( 'Latest', 'richie-editions-wp' ),
+            '30 days' => __( '30 days', 'richie-editions-wp' ),
+            '60 days' => __( '60 days', 'richie-editions-wp' ),
+            '90 days' => __( '90 days', 'richie-editions-wp' ),
+            '180 days' => __( '180 days', 'richie-editions-wp' ),
+        );
+
+        if ( isset( $translations[ $title ] ) ) {
+            return $translations[ $title ];
+        }
+        return $title;
     }
 
     public function get_available_indexes( $baseurl = false ) {
@@ -289,7 +305,7 @@ class Richie_Editions_Wp_Admin {
                     $available_indexes = array_map(
                         function( $index ) {
                             return array(
-                                'title' => $index['range'],
+                                'title' => $this->get_translated_index_title( $index['range'] ),
                                 'value' => $index['path'],
                             );
                         },
@@ -301,11 +317,11 @@ class Richie_Editions_Wp_Admin {
             // 'all' and 'latest' are available as default, other options can be updated.
             $available_indexes = array(
                 array(
-                    'title' => 'all',
+                    'title' => __('All', 'richie-editions-wp'),
                     'value' => '_data/index.json',
                 ),
                 array(
-                    'title' => 'latest',
+                    'title' => __('Latest', 'richie-editions-wp'),
                     'value' => '_data/latest.json',
                 ),
             );

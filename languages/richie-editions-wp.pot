@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-10T07:36:23+00:00\n"
+"POT-Creation-Date: 2023-01-11T08:12:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: richie-editions-wp\n"
@@ -38,39 +38,81 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:249
+#: admin/class-richie-editions-wp-admin.php:255
 msgid "Richie Editions settings"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:250
-msgid "Editions organization"
+#: admin/class-richie-editions-wp-admin.php:256
+msgid "Richie Editions Web URL"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:251
-msgid "Editions hostname"
+#: admin/class-richie-editions-wp-admin.php:256
+msgid "Required. Richie Editions web url, including possible subtenant."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:252
-msgid "Editions secret"
+#: admin/class-richie-editions-wp-admin.php:257
+msgid "Richie Editions secret"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:257
+msgid "Richie Editions secret key. This is required if using custom access control."
 msgstr ""
 
 #: admin/class-richie-editions-wp-admin.php:258
-msgid "Editions index range"
+msgid "Richie Editions Web Error URL"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:258
+msgid "Redirect url if user isn't authorized to open issue"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:264
+msgid "Richie Editions index range"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:264
+msgid "Select index to use. To get available options, save Editions Hostname setting first."
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:269
+#: admin/class-richie-editions-wp-admin.php:320
+msgid "All"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:270
+#: admin/class-richie-editions-wp-admin.php:324
+msgid "Latest"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:271
+msgid "30 days"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:272
+msgid "60 days"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:273
+msgid "90 days"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:274
+msgid "180 days"
 msgstr ""
 
 #: admin/partials/richie-editions-admin-display.php:32
 msgid "Save all changes"
 msgstr ""
 
-#: includes/functions.php:91
+#: includes/functions.php:93
 msgid "Missing secret"
 msgstr ""
 
-#: includes/functions.php:95
+#: includes/functions.php:97
 msgid "Invalid issue uuid"
 msgstr ""
 
-#: includes/functions.php:99
+#: includes/functions.php:101
 msgid "Invalid timestamp, it must be an integer"
 msgstr ""
 
@@ -78,16 +120,16 @@ msgstr ""
 msgid "Invalid configuration, missing hostname in settings"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:154
+#: public/class-richie-editions-wp-public.php:153
 msgid "\"product\" attribute is required"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:158
-msgid "Invalid organization"
+#: public/class-richie-editions-wp-public.php:163
+msgid "Invalid product code"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:167
-#: public/class-richie-editions-wp-public.php:174
-#: public/class-richie-editions-wp-public.php:256
+#: public/class-richie-editions-wp-public.php:169
+#: public/class-richie-editions-wp-public.php:175
+#: public/class-richie-editions-wp-public.php:271
 msgid "Failed to fetch issues"
 msgstr ""
