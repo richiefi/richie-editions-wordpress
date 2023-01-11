@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-11T08:12:42+00:00\n"
+"POT-Creation-Date: 2023-01-11T11:55:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: richie-editions-wp\n"
@@ -38,65 +38,73 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:255
+#: admin/class-richie-editions-wp-admin.php:256
 msgid "Richie Editions settings"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:256
+#: admin/class-richie-editions-wp-admin.php:257
 msgid "Richie Editions Web URL"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:256
+#: admin/class-richie-editions-wp-admin.php:257
 msgid "Required. Richie Editions web url, including possible subtenant."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:257
+#: admin/class-richie-editions-wp-admin.php:258
 msgid "Richie Editions secret"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:257
+#: admin/class-richie-editions-wp-admin.php:258
 msgid "Richie Editions secret key. This is required if using custom access control."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:258
-msgid "Richie Editions Web Error URL"
+#: admin/class-richie-editions-wp-admin.php:259
+msgid "Richie Editions General Error URL"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:258
-msgid "Redirect url if user isn't authorized to open issue"
+#: admin/class-richie-editions-wp-admin.php:259
+msgid "Redirect url for general errors. Access denied errors have separate url setting. If not set, redirect to previous page."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:264
+#: admin/class-richie-editions-wp-admin.php:260
+msgid "Richie Editions Access Denied Error URL"
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:260
+msgid "Redirect url if user isn't authorized to open issue. If not set, redirect to previous page."
+msgstr ""
+
+#: admin/class-richie-editions-wp-admin.php:266
 msgid "Richie Editions index range"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:264
+#: admin/class-richie-editions-wp-admin.php:266
 msgid "Select index to use. To get available options, save Editions Hostname setting first."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:269
-#: admin/class-richie-editions-wp-admin.php:320
+#: admin/class-richie-editions-wp-admin.php:271
+#: admin/class-richie-editions-wp-admin.php:322
 msgid "All"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:270
-#: admin/class-richie-editions-wp-admin.php:324
+#: admin/class-richie-editions-wp-admin.php:272
+#: admin/class-richie-editions-wp-admin.php:326
 msgid "Latest"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:271
+#: admin/class-richie-editions-wp-admin.php:273
 msgid "30 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:272
+#: admin/class-richie-editions-wp-admin.php:274
 msgid "60 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:273
+#: admin/class-richie-editions-wp-admin.php:275
 msgid "90 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:274
+#: admin/class-richie-editions-wp-admin.php:276
 msgid "180 days"
 msgstr ""
 
@@ -130,6 +138,18 @@ msgstr ""
 
 #: public/class-richie-editions-wp-public.php:169
 #: public/class-richie-editions-wp-public.php:175
-#: public/class-richie-editions-wp-public.php:271
+#: public/class-richie-editions-wp-public.php:280
 msgid "Failed to fetch issues"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:289
+msgid "Unknown error"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:299
+msgid "Failed to get JWT token"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:354
+msgid "Failed to get redirect url [%s]"
 msgstr ""

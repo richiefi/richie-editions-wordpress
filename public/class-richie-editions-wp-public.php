@@ -153,7 +153,7 @@ class Richie_Editions_Wp_Public {
             return sprintf( '<div>%s</div>', esc_html__( '"product" attribute is required', 'richie-editions-wp' ) );
         }
 
-        [ $organization, $product ] = explode( '/', $atts['product'] );
+        @[ $organization, $product ] = explode( '/', $atts['product'] );
 
         if ( !empty( $organization ) && empty( $product ) ) {
             $product = $organization;
@@ -232,14 +232,26 @@ class Richie_Editions_Wp_Public {
         }
     }
 
-    public function redirect_to_error_page() {
-        $error_url = $this->richie_options['editions_error_url'];
-
-        if ( ! empty( $error_url ) ) {
-            $this->do_redirect( $error_url );
+    private function redirect_to_error_page( $url ) {
+        if ( ! empty( $url ) ) {
+            $this->do_redirect( $url );
         } else {
             $this->redirect_to_referer();
         }
+    }
+
+    public function redirect_to_general_error_page( $error ) {
+        // TODO: pass the error somehow to the error page?
+        if ( ! empty( $error ) && is_string( $error ) ) {
+            error_log( 'Richie Editions WP: ' . $error );
+        }
+        $error_url = $this->richie_options['editions_general_error_url'];
+        $this->redirect_to_error_page( $error_url );
+    }
+
+    public function redirect_to_access_denied_error_page() {
+        $error_url = $this->richie_options['editions_access_denied_error_url'];
+        $this->redirect_to_error_page( $error_url );
     }
 
     /**
@@ -277,16 +289,18 @@ class Richie_Editions_Wp_Public {
             $is_free_issue = $editions_service->is_issue_free( $uuid );
             $missing_secret = empty( $this->richie_options['editions_secret'] );
             $has_access = false;
+            $error = __('Unknown error', 'richie-editions-wp');
 
             if ( ! $is_free_issue ) {
                 // check if user has access to this issue.
-                if ( ! richie_has_editions_access( $product, $uuid ) || $missing_secret ) {
+                if ( $missing_secret || ! richie_has_editions_access( $product, $uuid ) ) {
                     // try to get jwt token.
 
                     $jwt_token = get_richie_editions_user_jwt_token( $product, $uuid );
 
                     if ( false ===  $jwt_token ) {
-                        $this->redirect_to_error_page();
+                        $error = __('Failed to get JWT token', 'richie-editions-wp');
+                        $this->redirect_to_general_error_page( $error );
                     }
                 } else {
                     $has_access = true;
@@ -323,8 +337,7 @@ class Richie_Editions_Wp_Public {
 
             } else if ( $jwt_token ) {
                 // has jwt token, continue redirect with remote link generation
-                [ $org ] = explode( '/', $product );
-                $remote_url = "{$hostname}/{$org}/_get_link_with_token/{$uuid}";
+                $remote_url = "{$hostname}/_get_link_with_token/{$uuid}";
 
                 $request_args = array(
                     'headers' => array(
@@ -337,13 +350,20 @@ class Richie_Editions_Wp_Public {
 
                 if ( $http_code === 200 ) {
                     $redirect_url = wp_remote_retrieve_body( $response );
+                } else if ( $http_code === 403 ) {
+                    $this->redirect_to_access_denied_error_page();
+                } else {
+                    $error = sprintf(
+                        __('Failed to get redirect url [%s]', 'richie-editions-wp'),
+                        $http_code
+                    );
                 }
             }
 
             if ( ! empty( $redirect_url ) ) {
                 $this->do_redirect( esc_url_raw( $redirect_url ) );
             } else {
-                $this->redirect_to_error_page();
+                $this->redirect_to_general_error_page( $error );
             }
         }
     }
@@ -355,10 +375,11 @@ class Richie_Editions_Wp_Public {
      */
     protected function do_redirect( $url ) {
         if ( ! empty( $url ) ) {
-            wp_safe_redirect( esc_url_raw( $url ) );
+            wp_redirect( esc_url_raw( $url ) );
+            exit();
+        } else {
+            wp_die('No redirection url set');
         }
-
-        exit();
     }
 
     /**
