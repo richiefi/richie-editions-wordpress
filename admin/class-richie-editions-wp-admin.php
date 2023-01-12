@@ -254,11 +254,10 @@ class Richie_Editions_Wp_Admin {
 
         // Create maggio section.
         $section = new Richie_Editions_Settings_Section( $editions_section_name, __( 'Richie Editions settings', 'richie-editions-wp' ), $this->settings_option_name );
-        $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'], 'description' => __('Required. Richie Editions web url, including possible subtenant.', 'richie-editions-wp') ) );
-        $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'], 'description' => __('Richie Editions secret key. This is required if using custom access control.', 'richie-editions-wp') ) );
-        $section->add_field( 'editions_general_error_url', __( 'Richie Editions General Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_general_error_url'], 'description' => __("Redirect url for general errors. Access denied errors have separate url setting. If not set, redirect to previous page.", 'richie-editions-wp' ) ) );
-        $section->add_field( 'editions_access_denied_error_url', __( 'Richie Editions Access Denied Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_access_denied_error_url'], 'description' => __("Redirect url if user isn't authorized to open issue. If not set, redirect to previous page.", 'richie-editions-wp' ) ) );
-
+        $section->add_field( 'editions_hostname', __( 'Richie Editions Web URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_hostname'] ?? '', 'description' => __('Required. Richie Editions web url, including possible subtenant.', 'richie-editions-wp') ) );
+        $section->add_field( 'editions_secret', __( 'Richie Editions secret', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_secret'] ?? '', 'description' => __('Richie Editions secret key. This is required if using custom access control.', 'richie-editions-wp') ) );
+        $section->add_field( 'editions_general_error_url', __( 'Richie Editions General Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_general_error_url'] ?? '', 'description' => __("Redirect url for general errors. Access denied errors have separate url setting. If not set, redirect to previous page.", 'richie-editions-wp' ) ) );
+        $section->add_field( 'editions_access_denied_error_url', __( 'Richie Editions Access Denied Error URL', 'richie-editions-wp' ), 'input_field', array( 'value' => $options['editions_access_denied_error_url'] ?? '', 'description' => __("Redirect url if user isn't authorized to open issue. If not set, redirect to previous page.", 'richie-editions-wp' ) ) );
 
         // 'all' and 'latest' are available as default, other options can be updated.
         $available_indexes = $this->get_available_indexes();
