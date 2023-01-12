@@ -27,7 +27,7 @@
 <div class="richie-editions-issue-container">
     <?php foreach( $issues as $issue ): ?>
         <div class="richie-editions-issue">
-            <a href="<?php echo $issue->get_redirect_url(); ?>" target="_blank" rel="noopener" >
+            <a class="richie-editions-issue-link" href="<?php echo $issue->get_redirect_url(); ?>" target="_blank" rel="noopener" >
                 <figure class="richie-editions-issue-cover">
                     <img src="<?php echo $issue->get_cover(200,300); ?>">
                     <figcaption class="richie-editions-issue-title"><?php esc_html_e($issue->title, $this->plugin_name) ?></figcaption>

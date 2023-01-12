@@ -29,6 +29,10 @@
   border-color: #38a;
 }
 
+.richie-editions-issue-link {
+  text-decoration: none;
+}
+
 .richie-editions-issue-title {
   font-weight: bold;
 }
