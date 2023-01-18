@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Richie Editions WP
- * Plugin URI:        https://github.com/richiefi/richie-editions-wordpress-plugin
+ * Plugin URI:        https://github.com/richiefi/richie-editions-wordpress
  * Description:       This plugin aims to make it easier to integrate Richie Editions e-paper content onto WordPress sites.
 
  * Version:           1.0.0
