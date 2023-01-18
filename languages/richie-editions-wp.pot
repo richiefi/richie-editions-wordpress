@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-11T11:55:30+00:00\n"
+"POT-Creation-Date: 2023-01-18T08:04:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: richie-editions-wp\n"
@@ -74,37 +74,37 @@ msgstr ""
 msgid "Redirect url if user isn't authorized to open issue. If not set, redirect to previous page."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:266
+#: admin/class-richie-editions-wp-admin.php:265
 msgid "Richie Editions index range"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:266
+#: admin/class-richie-editions-wp-admin.php:265
 msgid "Select index to use. To get available options, save Editions Hostname setting first."
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:271
-#: admin/class-richie-editions-wp-admin.php:322
+#: admin/class-richie-editions-wp-admin.php:270
+#: admin/class-richie-editions-wp-admin.php:321
 msgid "All"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:272
-#: admin/class-richie-editions-wp-admin.php:326
+#: admin/class-richie-editions-wp-admin.php:271
+#: admin/class-richie-editions-wp-admin.php:325
 msgid "Latest"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:273
+#: admin/class-richie-editions-wp-admin.php:272
 msgid "30 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:274
+#: admin/class-richie-editions-wp-admin.php:273
 msgid "60 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:275
+#: admin/class-richie-editions-wp-admin.php:274
 msgid "90 days"
 msgstr ""
 
-#: admin/class-richie-editions-wp-admin.php:276
+#: admin/class-richie-editions-wp-admin.php:275
 msgid "180 days"
 msgstr ""
 
@@ -137,19 +137,23 @@ msgid "Invalid product code"
 msgstr ""
 
 #: public/class-richie-editions-wp-public.php:169
-#: public/class-richie-editions-wp-public.php:175
-#: public/class-richie-editions-wp-public.php:280
+#: public/class-richie-editions-wp-public.php:283
 msgid "Failed to fetch issues"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:289
+#: public/class-richie-editions-wp-public.php:175
+msgid "No issues found"
+msgstr ""
+
+#: public/class-richie-editions-wp-public.php:292
 msgid "Unknown error"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:299
+#: public/class-richie-editions-wp-public.php:302
 msgid "Failed to get JWT token"
 msgstr ""
 
-#: public/class-richie-editions-wp-public.php:354
+#. translators: %s is the http code.
+#: public/class-richie-editions-wp-public.php:358
 msgid "Failed to get redirect url [%s]"
 msgstr ""

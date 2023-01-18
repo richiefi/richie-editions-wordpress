@@ -6,12 +6,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/richie-editions-"
 "wp\n"
 "Last-Translator: \n"
-"Language-Team: Suomi\n"
+"Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2023-01-11T07:40:58+00:00\n"
-"PO-Revision-Date: 2023-01-11 11:57+0000\n"
+"PO-Revision-Date: 2023-01-18 08:10+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: richie-editions-wp\n"
 "Language: fi\n"
@@ -22,38 +22,38 @@ msgstr ""
 msgid "\"product\" attribute is required"
 msgstr "\"product\" parametri on vaadittu"
 
-#: admin/class-richie-editions-wp-admin.php:276
+#: admin/class-richie-editions-wp-admin.php:275
 msgid "180 days"
 msgstr "180 päivää"
 
-#: admin/class-richie-editions-wp-admin.php:273
+#: admin/class-richie-editions-wp-admin.php:272
 msgid "30 days"
 msgstr "30 päivää"
 
-#: admin/class-richie-editions-wp-admin.php:274
+#: admin/class-richie-editions-wp-admin.php:273
 msgid "60 days"
 msgstr "60 päivää"
 
-#: admin/class-richie-editions-wp-admin.php:275
+#: admin/class-richie-editions-wp-admin.php:274
 msgid "90 days"
 msgstr "90 päivää"
 
-#: admin/class-richie-editions-wp-admin.php:271
-#: admin/class-richie-editions-wp-admin.php:322
+#: admin/class-richie-editions-wp-admin.php:270
+#: admin/class-richie-editions-wp-admin.php:321
 msgid "All"
 msgstr "Kaikki"
 
 #: public/class-richie-editions-wp-public.php:169
-#: public/class-richie-editions-wp-public.php:175
-#: public/class-richie-editions-wp-public.php:280
+#: public/class-richie-editions-wp-public.php:283
 msgid "Failed to fetch issues"
 msgstr "Näköislehtien lataus epäonnistui"
 
-#: public/class-richie-editions-wp-public.php:299
+#: public/class-richie-editions-wp-public.php:302
 msgid "Failed to get JWT token"
 msgstr "JWT tokenin haku epäonnistui"
 
-#: public/class-richie-editions-wp-public.php:354
+#. translators: %s is the http code.
+#: public/class-richie-editions-wp-public.php:358
 msgid "Failed to get redirect url [%s]"
 msgstr "Lehtilinkin haku epäonnistui [%s]"
 
@@ -81,14 +81,18 @@ msgstr "Virheellinen tuotekoodi"
 msgid "Invalid timestamp, it must be an integer"
 msgstr "Virheellinen aikaleima, pitää olla kokonaisluku"
 
-#: admin/class-richie-editions-wp-admin.php:272
-#: admin/class-richie-editions-wp-admin.php:326
+#: admin/class-richie-editions-wp-admin.php:271
+#: admin/class-richie-editions-wp-admin.php:325
 msgid "Latest"
 msgstr "Uusin"
 
 #: includes/functions.php:93
 msgid "Missing secret"
 msgstr "Puuttuva salausavain"
+
+#: public/class-richie-editions-wp-public.php:175
+msgid "No issues found"
+msgstr "Lehtiä ei löytynyt"
 
 #: admin/class-richie-editions-wp-admin.php:259
 msgid ""
@@ -121,7 +125,7 @@ msgstr "Richie Editions virhesivu (pääsy kielletty)"
 msgid "Richie Editions General Error URL"
 msgstr "Richie Editions virhesivu (yleinen)"
 
-#: admin/class-richie-editions-wp-admin.php:266
+#: admin/class-richie-editions-wp-admin.php:265
 msgid "Richie Editions index range"
 msgstr "Richie Editions indeksi"
 
@@ -156,7 +160,7 @@ msgstr "Richie OY"
 msgid "Save all changes"
 msgstr "Tallenna kaikki muutokset"
 
-#: admin/class-richie-editions-wp-admin.php:266
+#: admin/class-richie-editions-wp-admin.php:265
 msgid ""
 "Select index to use. To get available options, save Editions Hostname "
 "setting first."
@@ -176,6 +180,6 @@ msgstr ""
 "Tämä lisäosa auttaa integroimaan Richie Editionsin e-paper-sisällön "
 "WordPress-sivustoille helpommaksi."
 
-#: public/class-richie-editions-wp-public.php:289
+#: public/class-richie-editions-wp-public.php:292
 msgid "Unknown error"
 msgstr "Tuntematon virhe"
