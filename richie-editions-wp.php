@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              https://www.richie.fi
- * @since             1.0.0
+ * @since             1.1.0
  * @package           Richie_Editions_Wp
  *
  * @wordpress-plugin
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'RICHIE_EDITIONS_WP_VERSION', '1.0.0' );
+define( 'RICHIE_EDITIONS_WP_VERSION', '1.1.0' );
 define( 'RICHIE_EDITIONS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**

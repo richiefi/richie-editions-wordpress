@@ -46,6 +46,11 @@ add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
 
 
 == Changelog ==
+= 1.1.0 (06.02.2023) =
+* feat: hide shortcode output if no issues for the product found
+* fix: remove cache headers from redirects
+* fix: redirect to access error page if no jwt token returned
+
 
 = 1.0.0 (10.01.2023) =
 * Initial plugin code base
