@@ -375,6 +375,7 @@ class Richie_Editions_Wp_Public {
      */
     protected function do_redirect( $url ) {
         if ( ! empty( $url ) ) {
+            nocache_headers();
             wp_redirect( esc_url_raw( $url ) );
             exit();
         } else {
