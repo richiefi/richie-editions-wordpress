@@ -172,7 +172,7 @@ class Richie_Editions_Wp_Public {
         $issues = $editions_service->get_issues( $organization, $product, intval( $atts['number_of_issues'] ) );
 
         if ( false === $issues ) {
-            return sprintf( '<div>%s</div>', esc_html__( 'No issues found', 'richie-editions-wp' ) );
+            return ''; // No output if no issues found. Should we log this?
         }
 
         $richie_template_loader = new Richie_Editions_Template_Loader();
