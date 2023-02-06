@@ -299,8 +299,7 @@ class Richie_Editions_Wp_Public {
                     $jwt_token = get_richie_editions_user_jwt_token( $product, $uuid );
 
                     if ( false ===  $jwt_token ) {
-                        $error = __('Failed to get JWT token', 'richie-editions-wp');
-                        $this->redirect_to_general_error_page( $error );
+                        $this->redirect_to_access_denied_error_page();
                     }
                 } else {
                     $has_access = true;
