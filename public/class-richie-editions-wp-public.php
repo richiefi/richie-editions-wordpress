@@ -296,6 +296,7 @@ class Richie_Editions_Wp_Public {
             if ( ! $is_free_issue && ! $has_access && ! $jwt_token ) {
                 // check if user has access to this issue.
                 $this->redirect_to_access_denied_error_page();
+                return;
             }
 
             if ( $has_access ) {
@@ -346,6 +347,7 @@ class Richie_Editions_Wp_Public {
                     $redirect_url = "{$hostname}/{$uuid}";
                 } else if ( $http_code === 403 ) {
                     $this->redirect_to_access_denied_error_page();
+                    return;
                 } else {
                     $error = sprintf(
                         // translators: %s is the http code.
