@@ -283,31 +283,24 @@ class Richie_Editions_Wp_Public {
                 return sprintf( '<div>%s</div>', esc_html__( 'Failed to fetch issues', 'richie-editions-wp' ) );
             }
 
-            $hostname      = $this->richie_options['editions_hostname'];
-            $product       = $wp->query_vars['richie_prod'];
-            $uuid          = $wp->query_vars['richie_issue'];
-            $is_free_issue = $editions_service->is_issue_free( $uuid );
-            $missing_secret = empty( $this->richie_options['editions_secret'] );
-            $has_access = false;
-            $error = __('Unknown error', 'richie-editions-wp');
+            $hostname       = $this->richie_options['editions_hostname'];
+            $product        = $wp->query_vars['richie_prod'];
+            $uuid           = $wp->query_vars['richie_issue'];
+            $is_free_issue  = $editions_service->is_issue_free( $uuid );
+            $has_secret     = ! empty( $this->richie_options['editions_secret'] );
+            $error          = __('Unknown error', 'richie-editions-wp');
+            $has_access     = $has_secret && richie_has_editions_access( $product, $uuid );
+            $jwt_token      = get_richie_editions_user_jwt_token( $product, $uuid );
+            $redirect_url   = false;
 
-            if ( ! $is_free_issue ) {
+            if ( ! $is_free_issue && ! $has_access && ! $jwt_token ) {
                 // check if user has access to this issue.
-                if ( $missing_secret || ! richie_has_editions_access( $product, $uuid ) ) {
-                    // try to get jwt token.
-
-                    $jwt_token = get_richie_editions_user_jwt_token( $product, $uuid );
-
-                    if ( false ===  $jwt_token ) {
-                        $this->redirect_to_access_denied_error_page();
-                    }
-                } else {
-                    $has_access = true;
-                }
+                $this->redirect_to_access_denied_error_page();
+                return;
             }
 
-            if ( $has_access && ! $missing_secret ) {
-                // has access, continue redirect with signin link.
+            if ( $has_access ) {
+                // has access and secret, continue redirect with signin link.
                 $timestamp = time();
 
                 $secret = $this->richie_options['editions_secret'];
@@ -349,8 +342,12 @@ class Richie_Editions_Wp_Public {
 
                 if ( $http_code === 200 ) {
                     $redirect_url = wp_remote_retrieve_body( $response );
+                } else if ( $is_free_issue ) {
+                    // try direct redirection to free issue because jwt signin failed.
+                    $redirect_url = "{$hostname}/{$uuid}";
                 } else if ( $http_code === 403 ) {
                     $this->redirect_to_access_denied_error_page();
+                    return;
                 } else {
                     $error = sprintf(
                         // translators: %s is the http code.
@@ -358,6 +355,9 @@ class Richie_Editions_Wp_Public {
                         $http_code
                     );
                 }
+            } else if ( $is_free_issue ) {
+                // try direct redirection to free issue because both signin methods failed.
+                $redirect_url = "{$hostname}/{$uuid}";
             }
 
             if ( ! empty( $redirect_url ) ) {
