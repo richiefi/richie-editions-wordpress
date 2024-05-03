@@ -240,17 +240,29 @@ class Richie_Editions_Wp_Public {
         }
     }
 
-    public function redirect_to_general_error_page( $error ) {
+    private function replace_placeholders( $url, $placeholders ) {
+        foreach ( $placeholders as $key => $value ) {
+            $url = str_replace( "%%{$key}%%", $value, $url );
+        }
+        return $url;
+    }
+
+    public function redirect_to_general_error_page( $uuid, $product, $error ) {
         // TODO: pass the error somehow to the error page?
         if ( ! empty( $error ) && is_string( $error ) ) {
             error_log( 'Richie Editions WP: ' . $error );
         }
         $error_url = $this->richie_options['editions_general_error_url'];
+        $error_url = $this->replace_placeholders( $error_url, array( 'issue' => $uuid, 'product' => $product ) );
+
         $this->redirect_to_error_page( $error_url );
     }
 
-    public function redirect_to_access_denied_error_page() {
+    public function redirect_to_access_denied_error_page( $uuid, $product ) {
         $error_url = $this->richie_options['editions_access_denied_error_url'];
+        $error_url = $this->replace_placeholders( $error_url, array( 'issue' => $uuid, 'product' => $product ) );
+
+        //$error_url = add_query_arg( array( 'issue' => $uuid, 'product' => $product ), $error_url);
         $this->redirect_to_error_page( $error_url );
     }
 
@@ -295,7 +307,7 @@ class Richie_Editions_Wp_Public {
 
             if ( ! $is_free_issue && ! $has_access && ! $jwt_token ) {
                 // check if user has access to this issue.
-                $this->redirect_to_access_denied_error_page();
+                $this->redirect_to_access_denied_error_page($uuid, $product);
                 return;
             }
 
@@ -346,7 +358,7 @@ class Richie_Editions_Wp_Public {
                     // try direct redirection to free issue because jwt signin failed.
                     $redirect_url = "{$hostname}/{$uuid}";
                 } else if ( $http_code === 403 ) {
-                    $this->redirect_to_access_denied_error_page();
+                    $this->redirect_to_access_denied_error_page($uuid, $product);
                     return;
                 } else {
                     $error = sprintf(
@@ -363,7 +375,7 @@ class Richie_Editions_Wp_Public {
             if ( ! empty( $redirect_url ) ) {
                 $this->do_redirect( esc_url_raw( $redirect_url ) );
             } else {
-                $this->redirect_to_general_error_page( $error );
+                $this->redirect_to_general_error_page( $uuid, $product, $error );
             }
         }
     }
