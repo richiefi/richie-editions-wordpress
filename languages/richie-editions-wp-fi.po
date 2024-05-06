@@ -6,12 +6,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/richie-editions-"
 "wp\n"
 "Last-Translator: \n"
-"Language-Team: Finnish\n"
+"Language-Team: Suomi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2023-01-11T07:40:58+00:00\n"
-"PO-Revision-Date: 2023-01-18 08:10+0000\n"
+"PO-Revision-Date: 2024-05-03 11:54+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: richie-editions-wp\n"
 "Language: fi\n"
@@ -43,25 +43,35 @@ msgstr "90 päivää"
 msgid "All"
 msgstr "Kaikki"
 
+#: admin/partials/richie-editions-admin-display.php:33
+msgid ""
+"Error urls value supports placeholder tags: <code>%%issue%%</code> and <code>"
+"%%product%%</code>, which are replaced with actual values. For example <code>"
+"https://example.com?i=%%issue%%&p=%%product%%</code>."
+msgstr ""
+"Virheiden URL-osoitteet tukevat tunnisteita: <code>%%issue%%</code> ja <code>"
+"%%product%%</code>. Nämä korvataan oikeilla arvoilla. Esimerkiksi <code>"
+"https://example.com?i=%%issue%%&p=%%product%%</code>."
+
 #: public/class-richie-editions-wp-public.php:169
-#: public/class-richie-editions-wp-public.php:283
+#: public/class-richie-editions-wp-public.php:295
 msgid "Failed to fetch issues"
 msgstr "Näköislehtien lataus epäonnistui"
 
-#: public/class-richie-editions-wp-public.php:302
-msgid "Failed to get JWT token"
-msgstr "JWT tokenin haku epäonnistui"
-
 #. translators: %s is the http code.
-#: public/class-richie-editions-wp-public.php:358
+#: public/class-richie-editions-wp-public.php:366
 msgid "Failed to get redirect url [%s]"
 msgstr "Lehtilinkin haku epäonnistui [%s]"
 
 #. Plugin URI of the plugin
-msgid "https://github.com/richiefi/richie-editions-wordpress-plugin"
+#: richie-editions-wp.php
+#, fuzzy
+#| msgid "https://github.com/richiefi/richie-editions-wordpress-plugin"
+msgid "https://github.com/richiefi/richie-editions-wordpress"
 msgstr "https://github.com/richiefi/richie-editions-wordpress-plugin"
 
 #. Author URI of the plugin
+#: richie-editions-wp.php
 msgid "https://www.richie.fi"
 msgstr "https://www.richie.fi"
 
@@ -89,10 +99,6 @@ msgstr "Uusin"
 #: includes/functions.php:93
 msgid "Missing secret"
 msgstr "Puuttuva salausavain"
-
-#: public/class-richie-editions-wp-public.php:175
-msgid "No issues found"
-msgstr "Lehtiä ei löytynyt"
 
 #: admin/class-richie-editions-wp-admin.php:259
 msgid ""
@@ -149,14 +155,16 @@ msgid "Richie Editions Web URL"
 msgstr "Richie editions verkko-osoite"
 
 #. Plugin Name of the plugin
+#: richie-editions-wp.php
 msgid "Richie Editions WP"
 msgstr "Richie Editions WP"
 
 #. Author of the plugin
+#: richie-editions-wp.php
 msgid "Richie OY"
 msgstr "Richie OY"
 
-#: admin/partials/richie-editions-admin-display.php:32
+#: admin/partials/richie-editions-admin-display.php:37
 msgid "Save all changes"
 msgstr "Tallenna kaikki muutokset"
 
@@ -173,6 +181,7 @@ msgid "Settings"
 msgstr "Asetukset"
 
 #. Description of the plugin
+#: richie-editions-wp.php
 msgid ""
 "This plugin aims to make it easier to integrate Richie Editions e-paper "
 "content onto WordPress sites."
@@ -180,6 +189,6 @@ msgstr ""
 "Tämä lisäosa auttaa integroimaan Richie Editionsin e-paper-sisällön "
 "WordPress-sivustoille helpommaksi."
 
-#: public/class-richie-editions-wp-public.php:292
+#: public/class-richie-editions-wp-public.php:303
 msgid "Unknown error"
 msgstr "Tuntematon virhe"

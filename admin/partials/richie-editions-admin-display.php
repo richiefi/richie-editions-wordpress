@@ -28,6 +28,11 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
             settings_fields($this->settings_option_name);
             do_settings_sections($this->settings_option_name);
         ?>
+        <p>
+            <?php
+                _e('Error urls value supports placeholder tags: <code>%%issue%%</code> and <code>%%product%%</code>, which are replaced with actual values. For example <code>https://example.com?i=%%issue%%&p=%%product%%</code>.', 'richie-editions-wp')
+            ?>
+        </p>
 
         <?php submit_button(esc_html__('Save all changes', 'richie-editions-wp'), 'primary','submit', TRUE); ?>
     </form>
