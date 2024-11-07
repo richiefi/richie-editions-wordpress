@@ -17,7 +17,7 @@
  * Plugin URI:        https://github.com/richiefi/richie-editions-wordpress
  * Description:       This plugin aims to make it easier to integrate Richie Editions e-paper content onto WordPress sites.
 
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Richie OY
  * Author URI:        https://www.richie.fi
  * License:           GPL-2.0+
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'RICHIE_EDITIONS_WP_VERSION', '1.1.2' );
+define( 'RICHIE_EDITIONS_WP_VERSION', '1.1.3' );
 define( 'RICHIE_EDITIONS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**

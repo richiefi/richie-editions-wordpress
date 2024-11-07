@@ -46,6 +46,10 @@ add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
 
 
 == Changelog ==
+= 1.1.3 (07.11.2024) =
+* fix: use wp_home_url instead of wp_site_url for redirect
+* fix: error handling when no cached response exists
+
 = 1.1.2 (06.05.2024) =
 * feat: support placeholder variables in error urls
 
