@@ -124,7 +124,10 @@ class Richie_Editions_Cached_Request {
         );
 
         if ( is_wp_error( $response ) ) {
-            return $cache['response']; // Return cached response if any.
+            if ( isset( $cache['response'] ) ) {
+                return $cache['response']; // Return cached response if any.
+            }
+            return $response;
         }
 
         $response_code = wp_remote_retrieve_response_code( $response );
@@ -295,7 +298,7 @@ class Richie_Editions_Service {
     private function get_cached_response() {
         $response = $this->cached_request->get_response();
 
-        if ( false === $response ) {
+        if ( is_wp_error( $response ) ) {
             return false;
         }
 
