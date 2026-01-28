@@ -1,0 +1,8 @@
+wp-content
+node_modules
+tmp
+vendor/**
+
+package-lock.json
+*.zip
+.phpunit.result.cache
