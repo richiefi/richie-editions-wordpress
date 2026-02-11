@@ -281,6 +281,31 @@ class Richie_Editions_Wp_Admin {
         return $title;
     }
 
+    /**
+     * Handle clear cache request.
+     *
+     * @return void
+     */
+    public function handle_clear_cache() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'Unauthorized', 'richie-editions-wp' ) );
+        }
+
+        check_admin_referer( 'richie_editions_clear_cache' );
+
+        $options  = get_option( $this->settings_option_name );
+        $hostname = isset( $options['editions_hostname'] ) ? $options['editions_hostname'] : '';
+        $index    = isset( $options['editions_index_range'] ) ? $options['editions_index_range'] : '';
+
+        if ( ! empty( $hostname ) ) {
+            $editions_service = new Richie_Editions_Service( $hostname, $index );
+            $editions_service->refresh_cached_response( true );
+        }
+
+        wp_safe_redirect( add_query_arg( 'cache-cleared', '1', admin_url( 'options-general.php?page=' . $this->settings_page_slug ) ) );
+        exit;
+    }
+
     public function get_available_indexes( $baseurl = false ) {
         $options = get_option( $this->settings_option_name );
 

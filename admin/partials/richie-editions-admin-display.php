@@ -36,4 +36,18 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
 
         <?php submit_button(esc_html__('Save all changes', 'richie-editions-wp'), 'primary','submit', TRUE); ?>
     </form>
+
+    <hr>
+    <h3><?php esc_html_e( 'Cache', 'richie-editions-wp' ); ?></h3>
+    <?php if ( isset( $_GET['cache-cleared'] ) ) : ?>
+        <div class="notice notice-success is-dismissible">
+            <p><?php esc_html_e( 'Editions cache cleared and refreshed.', 'richie-editions-wp' ); ?></p>
+        </div>
+    <?php endif; ?>
+    <p><?php esc_html_e( 'Clear the cached editions index and fetch fresh data from the server.', 'richie-editions-wp' ); ?></p>
+    <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+        <?php wp_nonce_field( 'richie_editions_clear_cache' ); ?>
+        <input type="hidden" name="action" value="richie_editions_clear_cache">
+        <?php submit_button( esc_html__( 'Clear Cache', 'richie-editions-wp' ), 'secondary', 'submit', false ); ?>
+    </form>
 </div>

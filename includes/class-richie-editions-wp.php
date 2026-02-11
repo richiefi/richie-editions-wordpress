@@ -170,6 +170,9 @@ class Richie_Editions_Wp {
         // Options.
         $this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
 
+        // Clear cache handler.
+        $this->loader->add_action( 'admin_post_richie_editions_clear_cache', $plugin_admin, 'handle_clear_cache' );
+
 	}
 
 	/**
