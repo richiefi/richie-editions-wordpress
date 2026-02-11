@@ -205,12 +205,8 @@ class Richie_Editions_Cached_Request {
      * @return int
      */
     private function parse_max_age( $cache_control ) {
-        $max_age = explode( 'max-age=', $cache_control );
-        if ( count( $max_age ) > 0 ) {
-            $max_age = explode( ',', $max_age[1] );
-            $max_age = trim( $max_age[0] );
-            $max_age = intval( $max_age );
-            return $max_age;
+        if ( preg_match( '/max-age=(\d+)/', $cache_control, $matches ) ) {
+            return intval( $matches[1] );
         }
         return false;
     }
