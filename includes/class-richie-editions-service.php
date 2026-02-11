@@ -111,11 +111,6 @@ class Richie_Editions_Cached_Request {
             $etag = $this->get_etag( $cache );
             if ( $etag ) {
                 $headers['If-None-Match'] = $etag;
-            } else {
-                $last_modified = $this->get_last_modified( $cache );
-                if ( $last_modified ) {
-                    $headers['If-Modified-Since'] = $last_modified;
-                }
             }
         }
 
@@ -194,29 +189,6 @@ class Richie_Editions_Cached_Request {
             if ( ! empty( $etag ) ) {
                 return $etag;
             }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get Last-Modified or Date header from the cached response for use in If-Modified-Since.
-     *
-     * Prefers the server's Last-Modified header, falls back to Date header.
-     * Returns false if neither is available — caller should do a full request instead.
-     *
-     * @since 1.2.0
-     * @param array $cache Array from transient.
-     * @return string|false Returns HTTP date string or false if not available
-     */
-    private function get_last_modified( $cache ) {
-        if ( ! isset( $cache, $cache['response'] ) ) {
-            return false;
-        }
-
-        $last_modified = wp_remote_retrieve_header( $cache['response'], 'last-modified' );
-        if ( ! empty( $last_modified ) ) {
-            return $last_modified;
         }
 
         return false;

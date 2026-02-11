@@ -184,33 +184,10 @@ class CachedRequestTest extends WP_UnitTestCase {
 		$this->assertEquals( '"abc123"', $this->captured_request_headers['If-None-Match'] );
 	}
 
-	// ─── Last-Modified conditional request ──────────────────────────────
-
-	public function test_sends_if_modified_since_from_last_modified_header() {
-		$last_modified = 'Wed, 01 Jan 2025 12:00:00 GMT';
-		$call_count    = 0;
-		$this->mock_http_callback( function ( $parsed_args ) use ( &$call_count, $last_modified ) {
-			$call_count++;
-			if ( 1 === $call_count ) {
-				return $this->make_response( '{"data":"v1"}', 200, array( 'last-modified' => $last_modified ) );
-			}
-			return $this->make_response( '', 304 );
-		} );
-
-		$cached_request = new Richie_Editions_Cached_Request( $this->test_url, 0, 3600 );
-		$cached_request->get_response();
-		$this->age_cache();
-		$cached_request->get_response();
-
-		$this->assertEquals( 2, $this->request_count );
-		$this->assertEquals( $last_modified, $this->captured_request_headers['If-Modified-Since'] );
-	}
-
-	public function test_no_conditional_header_when_no_etag_or_last_modified() {
+	public function test_no_conditional_header_when_no_etag() {
 		$call_count = 0;
 		$this->mock_http_callback( function ( $parsed_args ) use ( &$call_count ) {
 			$call_count++;
-			// No etag, no last-modified in response.
 			return $this->make_response( '{"data":"v' . $call_count . '"}', 200 );
 		} );
 
@@ -221,28 +198,6 @@ class CachedRequestTest extends WP_UnitTestCase {
 
 		$this->assertEquals( 2, $this->request_count );
 		$this->assertArrayNotHasKey( 'If-None-Match', $this->captured_request_headers );
-		$this->assertArrayNotHasKey( 'If-Modified-Since', $this->captured_request_headers );
-	}
-
-	public function test_etag_takes_priority_over_last_modified() {
-		$call_count = 0;
-		$this->mock_http_callback( function ( $parsed_args ) use ( &$call_count ) {
-			$call_count++;
-			if ( 1 === $call_count ) {
-				return $this->make_response( '{"data":"v1"}', 200, array(
-					'etag'          => '"xyz"',
-					'last-modified' => 'Wed, 01 Jan 2025 12:00:00 GMT',
-				) );
-			}
-			return $this->make_response( '', 304 );
-		} );
-
-		$cached_request = new Richie_Editions_Cached_Request( $this->test_url, 0, 3600 );
-		$cached_request->get_response();
-		$this->age_cache();
-		$cached_request->get_response();
-
-		$this->assertArrayHasKey( 'If-None-Match', $this->captured_request_headers );
 		$this->assertArrayNotHasKey( 'If-Modified-Since', $this->captured_request_headers );
 	}
 
