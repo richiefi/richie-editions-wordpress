@@ -180,11 +180,19 @@ class Richie_Editions_Cached_Request {
      *
      * @since 1.0.0
      * @param array $cache Array from transient.
-     * @return string|boolean Returns etag or false if not found
+     * @return string|false Returns etag or false if not found
      */
     private function get_etag( $cache ) {
         if ( isset( $cache, $cache['response'] ) ) {
-            return wp_remote_retrieve_header( $cache['response'], 'etag' );
+            $etag = wp_remote_retrieve_header( $cache['response'], 'etag' );
+            if ( ! empty( $etag ) ) {
+                return $etag;
+            }
+        }
+
+        return false;
+    }
+
         }
 
         return false;
