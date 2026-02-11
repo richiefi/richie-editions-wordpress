@@ -112,7 +112,10 @@ class Richie_Editions_Cached_Request {
             if ( $etag ) {
                 $headers['If-None-Match'] = $etag;
             } else {
-                $headers['If-Modified-Since'] = date( 'D, d M Y H:i:s', $cache['timestamp'] );
+                $last_modified = $this->get_last_modified( $cache );
+                if ( $last_modified ) {
+                    $headers['If-Modified-Since'] = $last_modified;
+                }
             }
         }
 
@@ -133,8 +136,8 @@ class Richie_Editions_Cached_Request {
         $response_code = wp_remote_retrieve_response_code( $response );
 
         if ( 304 === $response_code ) {
-            // Nothing changed, return cached response.
-            $this->set_cached_request( $cache['response'], $this->maximum_cache_time );
+            // Nothing changed, refresh transient expiration but keep original timestamp.
+            $this->set_cached_request( $cache['response'], $this->maximum_cache_time, $cache['timestamp'] );
             return $cache['response'];
         }
 
@@ -168,7 +171,10 @@ class Richie_Editions_Cached_Request {
         }
 
         $cache_time = max( $max_age, $this->minimum_cache_time );
-        if ( isset( $cache, $cache['timestamp'] ) && ( time() - $cache['timestamp'] <= $cache_time ) ) {
+        if ( $this->maximum_cache_time > 0 ) {
+            $cache_time = min( $cache_time, $this->maximum_cache_time );
+        }
+        if ( isset( $cache['timestamp'] ) && ( time() - $cache['timestamp'] <= $cache_time ) ) {
             return true;
         }
 
@@ -193,6 +199,24 @@ class Richie_Editions_Cached_Request {
         return false;
     }
 
+    /**
+     * Get Last-Modified or Date header from the cached response for use in If-Modified-Since.
+     *
+     * Prefers the server's Last-Modified header, falls back to Date header.
+     * Returns false if neither is available — caller should do a full request instead.
+     *
+     * @since 1.2.0
+     * @param array $cache Array from transient.
+     * @return string|false Returns HTTP date string or false if not available
+     */
+    private function get_last_modified( $cache ) {
+        if ( ! isset( $cache, $cache['response'] ) ) {
+            return false;
+        }
+
+        $last_modified = wp_remote_retrieve_header( $cache['response'], 'last-modified' );
+        if ( ! empty( $last_modified ) ) {
+            return $last_modified;
         }
 
         return false;
@@ -220,9 +244,8 @@ class Richie_Editions_Cached_Request {
     private function get_max_age( $cache ) {
         if ( isset( $cache, $cache['response'] ) ) {
             $cache_control = wp_remote_retrieve_header( $cache['response'], 'cache-control' );
-            if ( isset( $cache_control ) ) {
-                $max_age = $this->parse_max_age( $cache_control );
-                return $max_age;
+            if ( ! empty( $cache_control ) ) {
+                return $this->parse_max_age( $cache_control );
             }
         }
 
@@ -236,9 +259,9 @@ class Richie_Editions_Cached_Request {
      * @param array $response   Response from wp_remote_get.
      * @param int   $cache_time Optional. Delete cache after given time in seconds.
      */
-    private function set_cached_request( $response, $cache_time = 0 ) {
+    private function set_cached_request( $response, $cache_time = 0, $timestamp = null ) {
         $cache = array(
-            'timestamp' => time(),
+            'timestamp' => null !== $timestamp ? $timestamp : time(),
             'response'  => $response,
         );
 
