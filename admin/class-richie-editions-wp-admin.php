@@ -302,7 +302,9 @@ class Richie_Editions_Wp_Admin {
             $editions_service->refresh_cached_response( true );
         }
 
-        wp_safe_redirect( add_query_arg( 'cache-cleared', '1', admin_url( 'options-general.php?page=' . $this->settings_page_slug ) ) );
+        set_transient( 'richie_editions_cache_cleared', true, 30 );
+
+        wp_safe_redirect( admin_url( 'options-general.php?page=' . $this->settings_page_slug ) );
         exit;
     }
 

@@ -39,7 +39,8 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
 
     <hr>
     <h3><?php esc_html_e( 'Cache', 'richie-editions-wp' ); ?></h3>
-    <?php if ( isset( $_GET['cache-cleared'] ) ) : ?>
+    <?php if ( get_transient( 'richie_editions_cache_cleared' ) ) : ?>
+        <?php delete_transient( 'richie_editions_cache_cleared' ); ?>
         <div class="notice notice-success is-dismissible">
             <p><?php esc_html_e( 'Editions cache cleared and refreshed.', 'richie-editions-wp' ); ?></p>
         </div>
