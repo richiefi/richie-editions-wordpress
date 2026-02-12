@@ -3,7 +3,7 @@ Contributors: makkeu
 Donate link: https://www.richie.fi
 Tags: richie, shortcode, editions
 Requires at least: 5.0
-Tested up to: 6.1.1
+Tested up to: 6.9
 Stable Tag: 1.0.0
 Requires PHP: 7.4
 License: Copyright Richie OY
@@ -46,6 +46,10 @@ add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
 
 
 == Changelog ==
+= 1.1.4 (12.02.2025) =
+* feat: add cache clear button to settings
+* fix: some rare issues with news feed caching
+
 = 1.1.3 (07.11.2024) =
 * fix: use wp_home_url instead of wp_site_url for redirect
 * fix: error handling when no cached response exists
