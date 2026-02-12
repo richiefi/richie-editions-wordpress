@@ -111,8 +111,6 @@ class Richie_Editions_Cached_Request {
             $etag = $this->get_etag( $cache );
             if ( $etag ) {
                 $headers['If-None-Match'] = $etag;
-            } else {
-                $headers['If-Modified-Since'] = date( 'D, d M Y H:i:s', $cache['timestamp'] );
             }
         }
 
@@ -133,8 +131,8 @@ class Richie_Editions_Cached_Request {
         $response_code = wp_remote_retrieve_response_code( $response );
 
         if ( 304 === $response_code ) {
-            // Nothing changed, return cached response.
-            $this->set_cached_request( $cache['response'], $this->maximum_cache_time );
+            // Nothing changed, refresh transient expiration but keep original timestamp.
+            $this->set_cached_request( $cache['response'], $this->maximum_cache_time, $cache['timestamp'] );
             return $cache['response'];
         }
 
@@ -168,7 +166,10 @@ class Richie_Editions_Cached_Request {
         }
 
         $cache_time = max( $max_age, $this->minimum_cache_time );
-        if ( isset( $cache, $cache['timestamp'] ) && ( time() - $cache['timestamp'] <= $cache_time ) ) {
+        if ( $this->maximum_cache_time > 0 ) {
+            $cache_time = min( $cache_time, $this->maximum_cache_time );
+        }
+        if ( isset( $cache['timestamp'] ) && ( time() - $cache['timestamp'] <= $cache_time ) ) {
             return true;
         }
 
@@ -180,11 +181,14 @@ class Richie_Editions_Cached_Request {
      *
      * @since 1.0.0
      * @param array $cache Array from transient.
-     * @return string|boolean Returns etag or false if not found
+     * @return string|false Returns etag or false if not found
      */
     private function get_etag( $cache ) {
         if ( isset( $cache, $cache['response'] ) ) {
-            return wp_remote_retrieve_header( $cache['response'], 'etag' );
+            $etag = wp_remote_retrieve_header( $cache['response'], 'etag' );
+            if ( ! empty( $etag ) ) {
+                return $etag;
+            }
         }
 
         return false;
@@ -197,12 +201,8 @@ class Richie_Editions_Cached_Request {
      * @return int
      */
     private function parse_max_age( $cache_control ) {
-        $max_age = explode( 'max-age=', $cache_control );
-        if ( count( $max_age ) > 0 ) {
-            $max_age = explode( ',', $max_age[1] );
-            $max_age = trim( $max_age[0] );
-            $max_age = intval( $max_age );
-            return $max_age;
+        if ( preg_match( '/max-age=(\d+)/', $cache_control, $matches ) ) {
+            return intval( $matches[1] );
         }
         return false;
     }
@@ -216,9 +216,8 @@ class Richie_Editions_Cached_Request {
     private function get_max_age( $cache ) {
         if ( isset( $cache, $cache['response'] ) ) {
             $cache_control = wp_remote_retrieve_header( $cache['response'], 'cache-control' );
-            if ( isset( $cache_control ) ) {
-                $max_age = $this->parse_max_age( $cache_control );
-                return $max_age;
+            if ( ! empty( $cache_control ) ) {
+                return $this->parse_max_age( $cache_control );
             }
         }
 
@@ -232,9 +231,9 @@ class Richie_Editions_Cached_Request {
      * @param array $response   Response from wp_remote_get.
      * @param int   $cache_time Optional. Delete cache after given time in seconds.
      */
-    private function set_cached_request( $response, $cache_time = 0 ) {
+    private function set_cached_request( $response, $cache_time = 0, $timestamp = null ) {
         $cache = array(
-            'timestamp' => time(),
+            'timestamp' => null !== $timestamp ? $timestamp : time(),
             'response'  => $response,
         );
 
@@ -272,7 +271,7 @@ class Richie_Editions_Service {
      */
     public function __construct( $host_name, $index_path = '/_data/index.json' ) {
         $minimum_cache_time   = MINUTE_IN_SECONDS;
-        $maximum_cache_time   = 0; // No cache.
+        $maximum_cache_time   = MINUTE_IN_SECONDS * 120; // 2 hours.
         $index_url            = richie_editions_build_url( $host_name, $index_path );
         $this->cached_request = new Richie_Editions_Cached_Request( $index_url, $minimum_cache_time, $maximum_cache_time );
     }
