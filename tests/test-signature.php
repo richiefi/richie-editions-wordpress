@@ -15,6 +15,9 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
  */
 class SignatureTest extends WP_UnitTestCase {
 
+    public $secret;
+    public $timestamp;
+
     public function setUp(): void {
         parent::setUp();
         $this->secret    = '4361583c-be39-4dee-aa1c-a4ebe7f5ceda';
