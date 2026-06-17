@@ -322,7 +322,12 @@ class Richie_Editions_Wp_Admin {
         if ( $host_url ) {
             // We have hostname set, fetch available from the server.
             $url      = $host_url . '/_data/server_config.json';
-            $response = wp_remote_get( $url );
+            $response = wp_remote_get(
+                $url,
+                array(
+                    'headers' => richie_editions_get_server_request_headers(),
+                )
+            );
             $body     = wp_remote_retrieve_body( $response );
 
             if ( ! empty( $body ) ) {

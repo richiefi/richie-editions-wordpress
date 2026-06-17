@@ -137,6 +137,28 @@ function get_richie_editions_user_jwt_token( $product, $issue ) {
     return $jwt_token;
 }
 
+/**
+ * Build request headers for calls made by the Richie Editions plugin.
+ *
+ * @param array $headers Existing request headers.
+ * @return array Headers with Richie plugin version metadata.
+ */
+function richie_editions_get_server_request_headers( $headers = array() ) {
+    $version = defined( 'RICHIE_EDITIONS_WP_VERSION' ) ? RICHIE_EDITIONS_WP_VERSION : 'unknown';
+
+    $tracking_headers = array(
+        'User-Agent'              => sprintf( 'Richie Editions WP/%s; WordPress/%s', $version, get_bloginfo( 'version' ) ),
+        'X-Richie-Plugin'         => 'richie-editions-wp',
+        'X-Richie-Plugin-Version' => $version,
+    );
+
+    if ( defined( 'Richie_VERSION' ) ) {
+        $tracking_headers['X-Richie-News-Plugin-Version'] = Richie_VERSION;
+    }
+
+    return array_merge( $tracking_headers, $headers );
+}
+
 function richie_editions_build_url( $hostname, $path ) {
     $url = parse_url( $hostname );
 

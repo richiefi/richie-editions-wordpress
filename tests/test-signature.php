@@ -73,4 +73,25 @@ class SignatureTest extends WP_UnitTestCase {
         $hash   = richie_editions_generate_signature_hash( $this->secret, '1e6f3357-80cc-4f54-81dc-152cc300164e', $this->timestamp, $query );
         $this->assertEquals( $hash, 'fb9ed2e7e61c8abd5a680955d54f89753d9e7f1a3319694db9629e50e005306b' );
     }
+
+    public function test_server_request_headers_include_plugin_version() {
+        $headers = richie_editions_get_server_request_headers();
+
+        $this->assertEquals( 'richie-editions-wp', $headers['X-Richie-Plugin'] );
+        $this->assertEquals( RICHIE_EDITIONS_WP_VERSION, $headers['X-Richie-Plugin-Version'] );
+        $this->assertStringContainsString( 'Richie Editions WP/' . RICHIE_EDITIONS_WP_VERSION, $headers['User-Agent'] );
+    }
+
+    public function test_server_request_headers_preserve_existing_headers() {
+        $headers = richie_editions_get_server_request_headers(
+            array(
+                'Authorization' => 'Bearer test',
+                'User-Agent'    => 'Custom Agent',
+            )
+        );
+
+        $this->assertEquals( 'Bearer test', $headers['Authorization'] );
+        $this->assertEquals( 'Custom Agent', $headers['User-Agent'] );
+        $this->assertEquals( RICHIE_EDITIONS_WP_VERSION, $headers['X-Richie-Plugin-Version'] );
+    }
 }

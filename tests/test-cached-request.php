@@ -145,6 +145,17 @@ class CachedRequestTest extends WP_UnitTestCase {
 		$this->assertArrayNotHasKey( 'If-Modified-Since', $this->captured_request_headers );
 	}
 
+	public function test_first_request_sends_plugin_version_headers() {
+		$this->mock_http_response( $this->make_response() );
+
+		$cached_request = new Richie_Editions_Cached_Request( $this->test_url, 60, 3600 );
+		$cached_request->get_response();
+
+		$this->assertEquals( 'richie-editions-wp', $this->captured_request_headers['X-Richie-Plugin'] );
+		$this->assertEquals( RICHIE_EDITIONS_WP_VERSION, $this->captured_request_headers['X-Richie-Plugin-Version'] );
+		$this->assertStringContainsString( 'Richie Editions WP/' . RICHIE_EDITIONS_WP_VERSION, $this->captured_request_headers['User-Agent'] );
+	}
+
 	// ─── Cache within minimum_cache_time ────────────────────────────────
 
 	public function test_returns_cache_within_minimum_cache_time() {

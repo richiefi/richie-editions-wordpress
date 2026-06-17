@@ -344,9 +344,11 @@ class Richie_Editions_Wp_Public {
                 $remote_url = "{$hostname}/_get_link_with_token/{$uuid}";
 
                 $request_args = array(
-                    'headers' => array(
-                        'Authorization' => 'Bearer ' . $jwt_token
-                    )
+                    'headers' => richie_editions_get_server_request_headers(
+                        array(
+                            'Authorization' => 'Bearer ' . $jwt_token,
+                        )
+                    ),
                 );
 
                 $response  = wp_remote_get( $remote_url, $request_args );

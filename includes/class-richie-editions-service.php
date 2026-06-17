@@ -117,7 +117,7 @@ class Richie_Editions_Cached_Request {
         $response = wp_remote_get(
             $this->url,
             array(
-                'headers' => $headers,
+                'headers' => richie_editions_get_server_request_headers( $headers ),
             )
         );
 
