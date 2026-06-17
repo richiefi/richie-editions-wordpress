@@ -4,7 +4,7 @@ Donate link: https://www.richie.fi
 Tags: richie, shortcode, editions
 Requires at least: 5.0
 Tested up to: 6.9
-Stable Tag: 1.0.0
+Stable Tag: 1.1.5
 Requires PHP: 7.4
 License: Copyright Richie OY
 
@@ -46,6 +46,9 @@ add_filter('richie_editions_user_jwt_token', 'get_user_jwt_token');
 
 
 == Changelog ==
+= 1.1.5 (17.06.2026) =
+* feat: send plugin version metadata with Richie server requests
+
 = 1.1.4 (12.02.2025) =
 * feat: add cache clear button to settings
 * fix: some rare issues with news feed caching
@@ -124,4 +127,3 @@ The plugin can also delegate the access control decision to the Richie Editions 
 ### ERROR HANDLING
 
 In both of these scenarios, the plugin will either 1) redirect the user to the requested issue in Richie Editions or, in the case of an error, redirect them to the error page you have configured the in plugin configuration.
-
